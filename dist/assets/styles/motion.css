@@ -1,0 +1,263 @@
+/* Motion Nour: movimentos discretos, performáticos e orientados à leitura. */
+@property --score-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.brand-orbit {
+  isolation: isolate;
+  overflow: visible;
+  filter: saturate(0.92);
+}
+
+.brand-orbit::before {
+  content: "";
+  position: absolute;
+  inset: 18%;
+  z-index: -1;
+  border-radius: 50%;
+  background: rgba(23, 105, 255, 0.15);
+  filter: blur(42px);
+  animation: orbit-ambient 5.8s ease-in-out infinite;
+}
+
+.brand-core {
+  position: relative;
+  z-index: 3;
+  width: 52%;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  animation: brand-float 5.4s ease-in-out infinite;
+  will-change: transform;
+}
+
+.brand-core img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.76;
+  filter: drop-shadow(0 10px 28px rgba(23, 105, 255, 0.2));
+}
+
+.brand-glow {
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  background: rgba(39, 123, 255, 0.15);
+  filter: blur(24px);
+  animation: brand-pulse 3.8s ease-in-out infinite;
+}
+
+.orbit {
+  z-index: 1;
+  border-color: rgba(58, 132, 255, 0.23);
+  will-change: transform;
+}
+
+.orbit::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  border-top: 1px solid rgba(119, 186, 255, 0.54);
+  border-right: 1px solid transparent;
+  opacity: 0.65;
+}
+
+.orbit-outer { animation: orbit-clockwise 24s linear infinite; }
+.orbit-inner {
+  border-color: rgba(48, 125, 224, 0.15);
+  animation: orbit-counter 17s linear infinite;
+}
+
+.orbit-node,
+.data-pulse {
+  position: absolute;
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #77bcff;
+  box-shadow: 0 0 0 4px rgba(68, 144, 255, 0.08), 0 0 16px rgba(101, 185, 255, 0.62);
+}
+
+.node-one { top: 15%; left: 14%; }
+.node-two { right: 6%; bottom: 28%; width: 4px; height: 4px; }
+.node-three { top: 2%; left: 48%; width: 4px; height: 4px; }
+
+.data-pulse { z-index: 2; animation: data-pulse 2.8s ease-in-out infinite; }
+.pulse-one { top: 31%; right: 18%; }
+.pulse-two { bottom: 22%; left: 25%; animation-delay: -0.9s; }
+.pulse-three { top: 17%; left: 36%; width: 3px; height: 3px; animation-delay: -1.8s; }
+
+.data-thread {
+  position: absolute;
+  z-index: 0;
+  height: 1px;
+  width: 42%;
+  background: linear-gradient(90deg, transparent, rgba(69, 145, 255, 0.3), transparent);
+  transform-origin: center;
+  opacity: 0.52;
+}
+.thread-one { transform: rotate(28deg); animation: thread-scan-one 6.6s ease-in-out infinite; }
+.thread-two { transform: rotate(-34deg); animation: thread-scan-two 7.4s ease-in-out infinite; }
+
+.orbit-readout {
+  position: absolute;
+  z-index: 4;
+  padding: 5px 8px;
+  border: 1px solid rgba(87, 155, 255, 0.16);
+  border-radius: 999px;
+  color: rgba(173, 210, 255, 0.55);
+  background: rgba(4, 13, 29, 0.56);
+  font-size: 0.6rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+  animation: readout-breathe 4.6s ease-in-out infinite;
+}
+.orbit-readout b { color: rgba(111, 180, 255, 0.75); font-weight: 700; }
+.readout-score { top: 22%; right: -2%; }
+.readout-signals { bottom: 18%; left: -1%; animation-delay: -2.1s; }
+
+.js .reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 820ms cubic-bezier(0.22, 1, 0.36, 1), transform 820ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.js .reveal.is-visible { opacity: 1; transform: none; }
+
+.js .reveal :is(.pain-item, .answer-step, .deliverable, .process-step, .price-card, .faq-list details) {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 620ms cubic-bezier(0.22, 1, 0.36, 1), transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.js .reveal.is-visible :is(.pain-item, .answer-step, .deliverable, .process-step, .price-card, .faq-list details) {
+  opacity: 1;
+  transform: none;
+}
+.js .reveal.is-visible :is(.pain-item, .answer-step, .deliverable, .process-step, .price-card, .faq-list details):nth-child(2) { transition-delay: 70ms; }
+.js .reveal.is-visible :is(.pain-item, .answer-step, .deliverable, .process-step, .price-card, .faq-list details):nth-child(3) { transition-delay: 140ms; }
+.js .reveal.is-visible :is(.pain-item, .answer-step, .deliverable, .process-step, .price-card, .faq-list details):nth-child(4) { transition-delay: 210ms; }
+.js .reveal.is-visible :is(.pain-item, .answer-step, .deliverable, .process-step, .price-card, .faq-list details):nth-child(5) { transition-delay: 280ms; }
+.js .reveal.is-visible :is(.pain-item, .answer-step, .deliverable, .process-step, .price-card, .faq-list details):nth-child(6) { transition-delay: 350ms; }
+.js .reveal.is-visible :is(.pain-item, .answer-step, .deliverable, .process-step, .price-card, .faq-list details):nth-child(7) { transition-delay: 420ms; }
+.js .reveal.is-visible :is(.pain-item, .answer-step, .deliverable, .process-step, .price-card, .faq-list details):nth-child(8) { transition-delay: 490ms; }
+
+.js .score-ring {
+  --score-angle: 0deg;
+  background: conic-gradient(var(--blue) 0 var(--score-angle), rgba(126, 166, 221, 0.12) var(--score-angle) 360deg);
+}
+.js .method-score {
+  --score-angle: 0deg;
+  background: conic-gradient(var(--blue) 0 var(--score-angle), rgba(126, 166, 221, 0.12) var(--score-angle) 360deg);
+}
+.js .nss-card.is-animated .score-ring,
+.js .nss-detail.is-animated .method-score {
+  animation: score-fill 1.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.js .nss-card .track span { transform: scaleX(0); transform-origin: left; }
+.js .nss-card.is-animated .track span { transform: scaleX(1); }
+.js .nss-detail .dimension::after { transform: scaleX(0); transform-origin: left; transition: transform 720ms cubic-bezier(0.22, 1, 0.36, 1); }
+.js .nss-detail.is-animated .dimension::after { transform: scaleX(1); }
+.js .nss-detail.is-animated .dimension:nth-child(2)::after { transition-delay: 70ms; }
+.js .nss-detail.is-animated .dimension:nth-child(3)::after { transition-delay: 140ms; }
+.js .nss-detail.is-animated .dimension:nth-child(4)::after { transition-delay: 210ms; }
+.js .nss-detail.is-animated .dimension:nth-child(5)::after { transition-delay: 280ms; }
+.js .nss-detail.is-animated .dimension:nth-child(6)::after { transition-delay: 350ms; }
+
+.button,
+.nss-card,
+.nss-detail,
+.price-card,
+.deliverable,
+.process-step,
+.pain-item,
+.answer-step,
+.founder-mark {
+  transition-duration: 260ms;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+.button:active { transform: translateY(0) scale(0.98); }
+
+@media (hover: hover) and (pointer: fine) {
+  .button:hover { box-shadow: 0 12px 34px rgba(23, 105, 255, 0.2); }
+  .button-secondary:hover { border-color: rgba(133, 190, 255, 0.72); background: rgba(18, 44, 84, 0.58); }
+  .nss-card:hover,
+  .nss-detail:hover { transform: translateY(-4px); border-color: rgba(101, 185, 255, 0.42); }
+  .deliverable:hover,
+  .process-step:hover,
+  .pain-item:hover { transform: translateY(-3px); }
+  .deliverable:hover h3,
+  .process-step:hover h3,
+  .pain-item:hover strong { color: #cfe7ff; }
+  .answer-step:hover { padding-left: 8px; }
+  .founder-signature:hover .founder-mark { border-color: rgba(101, 185, 255, 0.38); box-shadow: 0 0 28px rgba(23, 105, 255, 0.12); }
+}
+
+@keyframes brand-float {
+  0%, 100% { transform: translate3d(0, -6px, 0); }
+  50% { transform: translate3d(0, 8px, 0); }
+}
+@keyframes brand-pulse {
+  0%, 100% { opacity: 0.42; transform: scale(0.92); }
+  50% { opacity: 0.82; transform: scale(1.08); }
+}
+@keyframes orbit-ambient {
+  0%, 100% { opacity: 0.42; transform: scale(0.92); }
+  50% { opacity: 0.72; transform: scale(1.05); }
+}
+@keyframes orbit-clockwise { to { transform: rotate(360deg); } }
+@keyframes orbit-counter { to { transform: rotate(-360deg); } }
+@keyframes data-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.75); }
+  50% { opacity: 0.9; transform: scale(1.35); }
+}
+@keyframes thread-scan-one {
+  0%, 100% { opacity: 0.22; transform: rotate(28deg) scaleX(0.72); }
+  50% { opacity: 0.58; transform: rotate(28deg) scaleX(1.08); }
+}
+@keyframes thread-scan-two {
+  0%, 100% { opacity: 0.18; transform: rotate(-34deg) scaleX(0.8); }
+  50% { opacity: 0.5; transform: rotate(-34deg) scaleX(1.12); }
+}
+@keyframes readout-breathe {
+  0%, 100% { opacity: 0.48; transform: translateY(0); }
+  50% { opacity: 0.76; transform: translateY(-3px); }
+}
+@keyframes score-fill { to { --score-angle: 295.2deg; } }
+
+@media (max-width: 900px) {
+  .brand-orbit { margin-block: 8px 4px; }
+  .readout-score { right: 0; }
+  .readout-signals { left: 0; }
+}
+
+@media (max-width: 400px) {
+  .orbit-readout { font-size: 0.55rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-orbit::before,
+  .brand-core,
+  .brand-glow,
+  .orbit,
+  .data-pulse,
+  .data-thread,
+  .orbit-readout { animation: none !important; }
+
+  .js .reveal,
+  .js .reveal :is(.pain-item, .answer-step, .deliverable, .process-step, .price-card, .faq-list details) {
+    opacity: 1;
+    transform: none;
+  }
+
+  .js .score-ring,
+  .js .method-score { --score-angle: 295.2deg; }
+  .js .nss-card .track span,
+  .js .nss-detail .dimension::after { transform: none; }
+}
