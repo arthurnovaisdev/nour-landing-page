@@ -1,0 +1,28 @@
+# Variáveis locais e credenciais
+.env
+.env.*
+!.env.example
+
+# Dependências e artefatos temporários
+node_modules/
+.cache/
+.tmp/
+tmp/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Estado local das ferramentas
+.sites-runtime/
+.qa/
+.codex/
+
+# Editores e sistema operacional
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
