@@ -12,7 +12,8 @@ A pasta contém os ativos oficiais de marca, o briefing, a copy consolidada, pr�
 .
 ├── .openai/hosting.json       # Configuração local de hospedagem; ainda sem publicação
 ├── assets/brand/              # Arquivos-fonte oficiais da marca
-├── dist/                      # Versão estática navegável da landing page
+├── dist/                      # Página completa; única pasta servida ao navegador
+│   └── assets/styles/         # Base visual e identidade responsiva
 ├── docs/                      # Contexto, copy, decisões e checklist
 ├── previews/                  # Prévias visuais aprovadas e históricas
 ├── .env.example              # Nomes das variáveis, sem valores reais
@@ -24,6 +25,8 @@ A pasta contém os ativos oficiais de marca, o briefing, a copy consolidada, pr�
 
 O projeto permanece propositalmente estático e sem dependências. Qualquer servidor HTTP local pode servir a pasta `dist/`. Abrir o arquivo diretamente pelo sistema pode limitar alguns comportamentos do navegador; prefira um servidor local durante a validação.
 
+Use `dist/index.html` para a estrutura e `dist/assets/styles/identity.css` para os ajustes de identidade. `base.css` preserva os componentes da prévia anterior. Sirva somente `dist/`, nunca a raiz que contém contexto interno e documentos do cliente. Os botões de compra e contato estão desativados até a etapa de integrações.
+
 ## Variáveis de ambiente
 
 Somente crie um arquivo `.env` quando uma integração realmente precisar dele. Valores públicos e segredos estão separados no `.env.example`. Tokens do PagBank e segredos de webhook são exclusivos do servidor e nunca podem aparecer no HTML ou JavaScript entregue ao visitante.
@@ -31,4 +34,3 @@ Somente crie um arquivo `.env` quando uma integração realmente precisar dele. 
 ## Publicação
 
 A publicação, a criação do repositório remoto e o envio ao GitHub dependem de autorização explícita. Antes disso, siga `docs/pre-launch-checklist.md` e confirme todas as pendências comerciais e jurídicas registradas em `docs/landing-page-v2.md`.
-

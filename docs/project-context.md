@@ -1,5 +1,25 @@
 # Contexto executivo do projeto
 
+## Estado após o Prompt 2 — 15/09/2026
+
+- Pasta principal: `C:\Projects\nour-landing-page`.
+- Página completa em `dist/index.html`; estilos em `dist/assets/styles/base.css` e `identity.css` (carregado por último).
+- O DOCX do cliente prevalece sobre as propostas antigas de copy em `landing-page-v2.md`.
+- Headline preservada: “O mercado muda em segundos. Suas decisões também deveriam evoluir.”
+- CTA final: “O mercado não vai ficar mais simples. Sua forma de interpretá-lo pode.”; apoio “Menos ruído. Mais contexto. Mais clareza.”; botão “Entrar para a Nour” leva a `#planos`.
+- NSS identificado no início e detalhado em seção própria com exemplo ilustrativo.
+- Seção “O desafio” reequilibrada com o monograma oficial, anéis discretos e títulos proporcionais.
+- Oito entregas, seis etapas de funcionamento, fundador, perfis, três planos e oito FAQs implementados.
+- WhatsApp usa símbolo local em SVG. Botões de pagamento e WhatsApp estão desativados; redes e textos legais não possuem links provisórios.
+- Nenhum serviço externo conectado. A demonstração usa `noindex, nofollow`; remover somente na preparação da publicação autorizada.
+- Conteúdo legível sem JavaScript. Refinamento de motion contínuo fica para o Prompt 3.
+- A frase do fundador “Dinheiro não aceita desaforo.” consta no DOCX do cliente e foi incluída como citação secundária.
+- Frequência e condições de cancelamento ainda pendentes: FAQ informa que serão disponibilizadas antes da contratação.
+
+### Validação desta etapa
+
+Página inspecionada em 1440, 1024, 768, 390 e 320 px. Corrigida a largura mínima que provocava rolagem lateral em 320 px. Verificados CTAs internos, FAQ, imagens locais e ausência de erros no console. Integrações reais e auditoria de publicação permanecem nas etapas 4 e 5.
+
 ## Produto
 
 A Nour oferece consultoria, inteligência e acompanhamento de mercado em criptoativos. A comunicação deve deixar essa categoria clara nos primeiros segundos da página, sem sugerir corretora, custódia, sala de sinais ou garantia de retorno.
@@ -34,4 +54,3 @@ Na seção “O desafio”, o ícone da Nour pode ocupar o espaço negativo com 
 - Foto profissional do fundador, se for utilizada.
 
 Para copy completa, arquitetura e critérios de validação, consulte `docs/landing-page-v2.md`.
-
