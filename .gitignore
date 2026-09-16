@@ -26,3 +26,9 @@ pnpm-debug.log*
 Thumbs.db
 Desktop.ini
 
+
+# Estado local da Netlify
+.netlify/
+
+
+Briefing_Landing_Page_NOUR.docx

@@ -25,7 +25,7 @@ Esta versão reposiciona a primeira tela para deixar claro que a Nour atua com c
 - Confirmar se os pagamentos são únicos ou parcelados.
 - Confirmar a assinatura oficial do logo.
 - Receber a foto profissional de Samuel Seza.
-- Receber links do PagBank, domínio, e-mail e identificadores de analytics.
+- Homologar checkout exclusivo via servidor PagBank; confirmar domínio, e-mail e identificadores de analytics, se autorizados.
 
 ## Arquitetura recomendada
 
@@ -558,3 +558,11 @@ O cliente deve conseguir responder sim para estas perguntas:
 5. O visual transmite tecnologia sem parecer genérico ou futurista demais?
 6. Os planos aparecem somente depois da construção de valor?
 7. A página evita promessas de ganho e afirmações não comprovadas?
+
+## Atualização de arquitetura — Prompt 4, 16/09/2026
+
+Esta decisão substitui a proposta anterior de links fixos por plano. O servidor criará um checkout exclusivo por pedido e manterá o estado em Netlify Database. A landing, a copy visível e os motions não foram alterados nesta etapa; os botões continuam desativados.
+
+A jornada aprovada é plano → checkout criado por Function → pagamento PagBank → webhook autenticado e reconciliação → PAID validado → WhatsApp com código → liberação manual por Samuel. Redirecionamento e código isolado não comprovam pagamento.
+
+Estados, política de expiração, prevenção de duplicatas, recuperação e limites da implementação estão em `docs/payment-architecture.md`. Acesso de 1/6/12 meses começa na liberação manual; checkout vence em 2 h. Regras comerciais devem constar nos termos antes de habilitar contratação. Nenhuma cobrança recorrente foi configurada.

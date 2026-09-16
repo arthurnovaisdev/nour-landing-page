@@ -29,8 +29,22 @@ Use `dist/index.html` para a estrutura e `dist/assets/styles/identity.css` para 
 
 ## Variáveis de ambiente
 
-Somente crie um arquivo `.env` quando uma integração realmente precisar dele. Valores públicos e segredos estão separados no `.env.example`. Tokens do PagBank e segredos de webhook são exclusivos do servidor e nunca podem aparecer no HTML ou JavaScript entregue ao visitante.
+Somente crie um arquivo `.env` quando uma integração realmente precisar dele. O `.env.example` contém somente nomes e valores fictícios reservados ao servidor. Tokens do PagBank e material de autenticação são exclusivos do servidor e nunca podem aparecer no HTML ou JavaScript entregue ao visitante.
 
 ## Publicação
 
 A publicação, a criação do repositório remoto e o envio ao GitHub dependem de autorização explícita. Antes disso, siga `docs/pre-launch-checklist.md` e confirme todas as pendências comerciais e jurídicas registradas em `docs/landing-page-v2.md`.
+
+## Estrutura de pagamentos — Prompt 4
+
+Arquitetura completa em `docs/payment-architecture.md`; evidências em `docs/payment-verification.md`.
+
+- `netlify.toml`: pasta pública `dist/` e diretório das Functions.
+- `netlify/functions/`: criação de checkout, consulta de pedido e webhook, todos bloqueados (503).
+- `server/payments/`: políticas internas e verificador isolado Order/Charge, sem chamadas externas.
+- `netlify/database/migrations/`: modelo Postgres para pedidos, sessões, eventos, fila e acesso manual; não aplicado.
+- `tests/` e `scripts/`: verificações locais usando apenas Node.js.
+
+Com Node.js 22 ou superior, execute `npm test` e `npm run check`. Não é necessário instalar dependências para estas verificações. Não há comando de deploy. O frontend continua estático e intocado.
+
+Netlify Database foi escolhido por persistência e transações; está documentado no plano Free baseado em créditos, sujeito à franquia e às condições vigentes. Nenhuma conta foi conectada. Adaptadores, worker, sessões e área privada do Samuel serão implementados na próxima etapa, antes de ativar os botões. Não execute publicação ou migração remota nesta etapa.

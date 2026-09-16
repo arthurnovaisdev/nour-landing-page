@@ -6,7 +6,7 @@
 - [ ] Entregas e frequência confirmadas.
 - [ ] Regras de cobrança, cancelamento e reembolso confirmadas.
 - [ ] Benefícios de cada plano confirmados.
-- [ ] Links mensais, semestrais e anuais do PagBank recebidos e testados sem concluir compra.
+- [ ] Checkouts exclusivos por pedido homologados no sandbox; links retornados pelo provedor validados, sem compra real em testes.
 - [ ] Contatos, domínio e redes sociais oficiais confirmados.
 
 ## Segurança
@@ -37,3 +37,22 @@
 - [ ] Publicação autorizada explicitamente.
 - [ ] Verificação final realizada no domínio de produção.
 
+
+## Pagamentos — bloqueios antes da ativação
+
+- [ ] Conta Netlify Database elegível, franquia, custo atual, backups e limites conferidos.
+- [ ] Migração testada em Postgres isolado; transações, rollback e concorrência aprovados.
+- [ ] Adaptadores, sessões HttpOnly, CSRF e limitação persistente de requisições implementados.
+- [ ] Assinatura de cada família de webhook e idempotência do endpoint Checkout homologadas.
+- [ ] Evento repetido, replay e evento fora de ordem não duplicam/liberam acesso.
+- [ ] Só PAID consultado no servidor, com IDs/valor/moeda corretos, abre pós-pagamento.
+- [ ] Falhas de rede/banco e criação ambígua não produzem checkout duplicado ou falso sucesso.
+- [ ] Worker, reconciliação, alertas e recuperação de jobs testados.
+- [ ] Reembolso parcial/integral e chargeback bloqueiam elegibilidade e geram tarefa manual.
+- [ ] Área privada com MFA permite a Samuel conferir identidade, liberar uma vez e auditar.
+- [ ] Validade 1/6/12 meses, início manual e ausência de recorrência confirmados nos termos.
+- [ ] Expiração do acesso gera tarefa de remoção, sem alegar remoção automática no WhatsApp.
+- [ ] Código público não permite consultar dados privados ou comprovar pagamento.
+- [ ] Credenciais só no servidor e isolamento de sandbox/produção/previews revisado.
+- [ ] Política de retenção financeira/privacidade definida antes de persistir dados reais.
+- [ ] Remoção do bloqueio 503 e alteração dos botões somente após implementar o fluxo completo.

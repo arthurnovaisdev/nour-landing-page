@@ -46,7 +46,7 @@ Na seção “O desafio”, o ícone da Nour pode ocupar o espaço negativo com 
 
 ## Pendências externas
 
-- Links públicos dos três checkouts do PagBank.
+- Homologação PagBank, conta Netlify com Database elegível e contato oficial de Samuel; checkouts exclusivos serão criados no servidor.
 - Regras de cobrança, parcelamento, renovação, cancelamento e reembolso.
 - Frequência final das análises, calls e atualizações.
 - Revisão jurídica do posicionamento e dos textos legais.
@@ -54,3 +54,19 @@ Na seção “O desafio”, o ícone da Nour pode ocupar o espaço negativo com 
 - Foto profissional do fundador, se for utilizada.
 
 Para copy completa, arquitetura e critérios de validação, consulte `docs/landing-page-v2.md`.
+
+## Estado após o Prompt 4 — 16/09/2026
+
+- Análise inicial concluída antes de editar; landing e motions preservados byte a byte.
+- Arquitetura escolhida: Checkout hospedado PagBank, Netlify Functions e Netlify Database/Postgres persistente.
+- `netlify.toml` serve apenas `dist/`; Functions, SQL, testes e documentação ficam privados no repositório.
+- Rotas de criação, consulta e webhook são esqueletos bloqueados (503), sem rede ou credenciais.
+- Migração SQL preparada e não aplicada. SDK/adaptadores, sessões, worker e painel administrativo ainda não implementados.
+- Catálogo interno acompanha os preços atuais: R$ 100/500/800; checkout 2 h, VIP 1/6/12 meses desde a liberação manual, com condições comerciais a validar antes das vendas.
+- PAID só permite pós-pagamento após reconciliação autenticada; Samuel verifica identidade e aprova/adiciona manualmente ao grupo.
+- Código de pedido é referência pública, nunca comprovante ou senha. Não expor convite permanente do grupo.
+- `.env.example` contém somente configuração fictícia, sem links fixos de checkout nem segredo de webhook inventado.
+- Netlify Database consta no Free baseado em créditos; confirmar conta/franquia/custo vigente. Autenticidade e idempotência exigem homologação específica de Checkout.
+- Nenhuma publicação, banco provisionado, chamada de pagamento ou credencial conectada.
+
+Documento principal: `docs/payment-architecture.md`. Verificações locais e limitações: `docs/payment-verification.md`.

@@ -15,7 +15,7 @@ Construir uma landing page premium, rápida e responsiva para a Nour, posicionad
 ## Fluxo de conversão
 
 - CTAs gerais como “Entrar para a Nour” levam à seção de planos.
-- Cada botão de plano leva ao checkout público correspondente do PagBank.
+- Fluxo aprovado no Prompt 4: cada plano solicitará ao servidor um checkout exclusivo do PagBank; os botões continuam desativados nesta etapa de estrutura.
 - WhatsApp é contato de apoio, com ícone reconhecível e rótulo acessível.
 - Nunca inventar links de pagamento nem disparar pagamentos em testes.
 
@@ -43,3 +43,14 @@ Construir uma landing page premium, rápida e responsiva para a Nour, posicionad
 - Segurança: `SECURITY.md`.
 - Checklist de entrega: `docs/pre-launch-checklist.md`.
 
+
+## Pagamentos — decisão do Prompt 4
+
+- Arquitetura e limites: `docs/payment-architecture.md`.
+- Netlify Functions + Netlify Database/Postgres; nenhum banco temporário das Functions.
+- Somente PAID reconciliado com a API, valor/moeda e vínculo do pedido permite pós-pagamento.
+- Código público não autentica comprador. Samuel confere e libera manualmente o VIP.
+- Rotas atuais bloqueadas por código; não habilitar por variável ou conectar credenciais nesta etapa.
+- Segredos configurados futuramente no painel seguro; nunca solicitar valores pela conversa.
+- Netlify Database Free usa créditos; confirmar condições da conta e cobrança antes de provisionar.
+- Não presumir assinatura ou idempotência de Checkout; homologar os contratos indicados na arquitetura.
