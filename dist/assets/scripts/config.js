@@ -8,6 +8,6 @@
     semiannualPaymentUrl: null,
     annualPaymentUrl: null,
     whatsappNumber: "5577981289835",
-    whatsappMessage: "Olá, Samuel. Conheci a Nour pelo site e gostaria de tirar uma dúvida sobre a consultoria.",
+    whatsappMessage: "Olá, equipe Nour. Conheci a Nour pelo site e gostaria de tirar uma dúvida sobre a consultoria.",
   });
 })();

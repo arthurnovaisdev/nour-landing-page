@@ -56,8 +56,8 @@
   });
 
   if (availablePlans === 3) {
-    status.textContent = "Você será direcionado ao ambiente seguro do PagBank para concluir o pagamento. A Nour confere a confirmação no PagBank e libera o acesso ao grupo VIP.";
+    status.textContent = "Os três planos estão disponíveis. O pagamento acontece no PagBank e, após a confirmação, a equipe da Nour dará continuidade à liberação do acesso ao grupo VIP.";
   } else if (availablePlans > 0) {
-    status.textContent = "Alguns Links de Pagamento oficiais ainda estão pendentes. Planos indisponíveis permanecem bloqueados; os demais direcionam ao ambiente seguro do PagBank.";
+    status.textContent = "Alguns Links de Pagamento oficiais ainda estão pendentes. Planos indisponíveis permanecem bloqueados; os demais direcionam ao PagBank para concluir o pagamento.";
   }
 })();
