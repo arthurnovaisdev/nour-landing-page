@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const publicRoot = resolve(root, "dist");
 async function files(directory) {
   const result = [];
   for (const entry of await readdir(directory, { withFileTypes: true })) {
@@ -18,27 +19,33 @@ async function files(directory) {
 const config = await readFile(resolve(root, "netlify.toml"), "utf8");
 assert.match(config, /publish\s*=\s*"dist"/);
 assert.match(config, /directory\s*=\s*"netlify\/functions"/);
-const publicFiles = await files(resolve(root, "dist"));
+const publicFiles = await files(publicRoot);
 for (const file of publicFiles) {
-  assert(!/(?:^|[\\/])\.|\.(?:sql|env|pem|key|map|mjs)$/i.test(relative(resolve(root, "dist"), file)), "Arquivo privado na pasta pública");
+  assert(!/(?:^|[\\/])\.|\.(?:sql|env|pem|key|map|mjs)$/i.test(relative(publicRoot, file)), "Arquivo privado na pasta pública");
   if (!/\.(?:html|css|js|json|txt)$/i.test(file)) continue;
   const text = await readFile(file, "utf8");
-  assert(!/PAGBANK_API_TOKEN|process\.env|postgres(?:ql)?:\/\/|Bearer\s+[A-Za-z0-9_-]{12}|-----BEGIN.*PRIVATE KEY|\.\.[/\\]server/i.test(text), "Indício de segredo ou import privado no conteúdo público");
+  assert(!/PAGBANK_API_TOKEN|CHECKOUT_ABUSE_SECRET|NETLIFY_DB_|@netlify\/database|@electric-sql|process\.env|postgres(?:ql)?:\/\/|Bearer\s+[A-Za-z0-9_-]{12}|-----BEGIN.*PRIVATE KEY|\.\.[/\\]server/i.test(text), "Indício de segredo ou import privado no conteúdo público");
 }
-const html = await readFile(resolve(root, "dist/index.html"), "utf8");
-const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(m => m[1]);
-assert.equal(new Set(ids).size, ids.length, "IDs HTML duplicados");
-for (const [, target] of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
-  if (target.startsWith("#")) assert(ids.includes(target.slice(1)), "Âncora sem destino");
-  else if (!/^https?:/.test(target)) {
-    const path = resolve(root, "dist", target);
-    assert(!relative(resolve(root, "dist"), path).startsWith(".."));
+for (const file of publicFiles.filter(file => file.endsWith(".html"))) {
+  const html = await readFile(file, "utf8");
+  const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(m => m[1]);
+  assert.equal(new Set(ids).size, ids.length, "IDs HTML duplicados");
+  for (const [, target] of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
+    if (/^https?:/.test(target)) continue;
+    const [pathname, anchor] = target.split("#");
+    const path = pathname ? resolve(dirname(file), pathname.split("?")[0]) : file;
+    assert(!relative(publicRoot, path).startsWith(".."), "Link fora da pasta pública");
     assert((await stat(path)).isFile(), "Ativo local ausente");
+    if (anchor) {
+      const targetHtml = await readFile(path, "utf8");
+      const targetIds = [...targetHtml.matchAll(/\bid="([^"]+)"/g)].map(m => m[1]);
+      assert(targetIds.includes(anchor), "Âncora sem destino");
+    }
   }
 }
-for (const directory of ["server", "netlify/functions", "tests", "scripts"]) {
+for (const directory of ["server", "netlify/functions", "tests", "scripts", "dist/assets/scripts"]) {
   for (const file of await files(resolve(root, directory))) {
-    if (!file.endsWith(".mjs")) continue;
+    if (!/\.(?:mjs|js)$/.test(file)) continue;
     const result = spawnSync(process.execPath, ["--check", file], { encoding: "utf8" });
     assert.equal(result.status, 0, `Sintaxe inválida: ${relative(root, file)}`);
   }

@@ -1,5 +1,7 @@
 # Arquitetura de pagamentos Nour — Prompt 4
 
+> Atualização do Prompt 5: criação Sandbox, adaptador SQL, sessão e proteção contra abuso foram implementados. O estado vigente dessa etapa está em [checkout-sandbox.md](checkout-sandbox.md). As descrições de rotas bloqueadas e ausência de dependências abaixo registram o estado histórico do Prompt 4; webhook e consulta financeira continuam bloqueados.
+
 Decisão registrada em 16/09/2026. Preparação local; nenhuma conta, credencial, banco remoto, checkout ou publicação foi criado. Fontes externas consultadas: somente documentação oficial do PagBank e da Netlify.
 
 ## Estado encontrado antes das alterações

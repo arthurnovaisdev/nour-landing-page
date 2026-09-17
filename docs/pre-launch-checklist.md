@@ -55,4 +55,14 @@
 - [ ] Código público não permite consultar dados privados ou comprovar pagamento.
 - [ ] Credenciais só no servidor e isolamento de sandbox/produção/previews revisado.
 - [ ] Política de retenção financeira/privacidade definida antes de persistir dados reais.
-- [ ] Remoção do bloqueio 503 e alteração dos botões somente após implementar o fluxo completo.
+- [ ] Habilitação de produção somente após implementar e homologar o fluxo completo. Botões do Prompt 5 limitados a Sandbox/mocks.
+
+## Etapa local do Prompt 5
+
+- [x] Function de checkout aceita apenas plano, com valores definidos no servidor.
+- [x] Sessão, limites persistentes, reserva transacional e reutilização de checkout implementados.
+- [x] Mocks sem credenciais e página de retorno sem liberação de acesso implementados.
+- [x] URLs fixas do servidor; POST para produção bloqueado por código.
+- [ ] Homologar hostname PAY e respostas reais da conta Sandbox, sem cobranças reais.
+- [ ] Validar SDK Netlify/concorrência multiconexão em banco Sandbox autorizado.
+- [ ] Implementar e homologar notificações, reconciliação, recuperação e painel nas etapas correspondentes.

@@ -6,9 +6,9 @@ export const ORDER_STATUSES = Object.freeze([
 
 // Snapshot dos preços já presentes na landing; confirmar condições antes de ativar.
 export const PLANS = Object.freeze({
-  mensal: Object.freeze({ amountCents: 10000, months: 1, currency: "BRL" }),
-  semestral: Object.freeze({ amountCents: 50000, months: 6, currency: "BRL" }),
-  anual: Object.freeze({ amountCents: 80000, months: 12, currency: "BRL" }),
+  mensal: Object.freeze({ amountCents: 10000, months: 1, currency: "BRL", name: "Nour — Mensal", description: "Consultoria e inteligência em criptoativos. Acesso por 1 mês após liberação manual." }),
+  semestral: Object.freeze({ amountCents: 50000, months: 6, currency: "BRL", name: "Nour — Semestral", description: "Consultoria e inteligência em criptoativos. Acesso por 6 meses após liberação manual." }),
+  anual: Object.freeze({ amountCents: 80000, months: 12, currency: "BRL", name: "Nour — Anual", description: "Consultoria e inteligência em criptoativos. Acesso por 12 meses após liberação manual." }),
 });
 export const CHECKOUT_TTL_MS = 2 * 60 * 60 * 1000;
 export const VERIFICATION_TTL_MS = 5 * 60 * 1000;

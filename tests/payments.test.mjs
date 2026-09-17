@@ -3,7 +3,6 @@ import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { ORDER_STATUSES, getPlan, checkoutExpiresAt, accessExpiresAt, canOpenPostPayment } from "../server/payments/policy.mjs";
 import { verifyOrderChargeSignature } from "../server/payments/authenticity.mjs";
-import createCheckout from "../netlify/functions/create-checkout.mjs";
 import orderStatus from "../netlify/functions/order-status.mjs";
 import webhook from "../netlify/functions/pagbank-webhook.mjs";
 
@@ -93,7 +92,7 @@ test("rotas não acessam rede nem habilitam pagamento por configuração ou payl
   globalThis.fetch = () => { throw new Error("NETWORK_FORBIDDEN"); };
   process.env.PAYMENTS_ENABLED = "true";
   try {
-    for (const [handler, method] of [[createCheckout, "POST"], [orderStatus, "GET"], [webhook, "POST"]]) {
+    for (const [handler, method] of [[orderStatus, "GET"], [webhook, "POST"]]) {
       const request = new Request("https://nour.example.invalid/api/test?status=PAID", {
         method,
         ...(method === "POST" ? { body: '{"status":"PAID","planId":"anual","amount":1}' } : {}),

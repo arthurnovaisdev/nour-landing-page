@@ -70,3 +70,16 @@ Para copy completa, arquitetura e critérios de validação, consulte `docs/land
 - Nenhuma publicação, banco provisionado, chamada de pagamento ou credencial conectada.
 
 Documento principal: `docs/payment-architecture.md`. Verificações locais e limitações: `docs/payment-verification.md`.
+
+## Estado após o Prompt 5 — 16/09/2026
+
+- Criação de checkout e sessão implementadas em Netlify Functions, exclusivamente Sandbox/mocks.
+- Botões enviam somente planId; catálogo, valores, nomes e duração permanecem no servidor.
+- Snapshot PENDING e tentativa persistidos antes do gateway; link só devolvido após commit.
+- Sessão HttpOnly, validação estrita, limites Postgres e idempotência local implementados.
+- Sem token, modo mock persiste a simulação e não gera link de pagamento; sem banco/configuração, falha fechada.
+- Prévia local isolada: npm run preview:checkout. Nenhuma credencial, conta ou banco remoto conectado.
+- Retorno do checkout não comprova pagamento. Webhook, consulta financeira, reconciliação e VIP seguem bloqueados.
+- Contratos reais da conta Sandbox e concorrência multiconexão do Postgres ainda exigem homologação.
+- Implementação e fontes oficiais: docs/checkout-sandbox.md. Testes: docs/payment-verification.md.
+- Nenhuma publicação, cobrança real ou envio ao GitHub.

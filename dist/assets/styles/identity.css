@@ -89,3 +89,7 @@ h1 { font-size: clamp(2.75rem, 4.15vw, 3.75rem); line-height: 1.07; letter-spaci
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }html { scroll-behavior: auto; }
 }
+
+#checkout-retry[hidden] { display: none; }
+#checkout-status { max-width: 70ch; margin-inline: auto; }
+#checkout-status:focus-visible { outline: 2px solid #65b9ff; outline-offset: 6px; }

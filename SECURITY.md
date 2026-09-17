@@ -10,7 +10,7 @@
 
 ## PagBank
 
-Cada pedido terá um checkout exclusivo criado por uma Netlify Function. Os botões da demonstração permanecem desativados até implementar e homologar o fluxo completo. O token da API nunca pode ser incluído em HTML, CSS, JavaScript do navegador, URL, mensagem de erro ou ferramenta de analytics.
+Cada pedido recebe um checkout exclusivo por Netlify Function. No Prompt 5, os botões iniciam somente Sandbox/mocks; produção e pós-pagamento permanecem bloqueados. Contrato atual: docs/checkout-sandbox.md. O token da API nunca pode ser incluído em HTML, CSS, JavaScript do navegador, URL, mensagem de erro ou ferramenta de analytics.
 
 Webhooks devem validar autenticidade, formato, método HTTP, tipo de conteúdo e identificador do evento antes de alterar qualquer estado. Eventos repetidos precisam ser tratados de forma idempotente.
 
@@ -38,7 +38,7 @@ Não publique detalhes de uma vulnerabilidade em issues públicas. Registre o pr
 
 - Somente PAID reconciliado com a API autenticada, checkout/cobrança/referência, valor e moeda corretos habilita pós-pagamento. Reembolso, disputa, revisão ou verificação vencida bloqueiam.
 - Redirecionamento, parâmetro de URL, mensagem de WhatsApp e código público não são prova de pagamento ou posse do pedido.
-- Sessão futura: cookie Secure/HttpOnly/SameSite e apenas hash persistido, sem credencial em URLs/localStorage. O navegador nunca recebe segredos PagBank/Database.
+- Sessão de checkout: cookie Secure/HttpOnly/SameSite e apenas hash persistido, sem credencial em URLs/localStorage. O navegador nunca recebe segredos PagBank/Database.
 - Samuel confere identidade e estado em área privada e registra a liberação manual. Nenhum convite permanente de grupo deve ser público.
 - Reembolso/chargeback e vencimento geram tarefas de suspensão/remoção manual; o estado financeiro é separado da validade do VIP.
 
@@ -46,7 +46,7 @@ Não publique detalhes de uma vulnerabilidade em issues públicas. Registre o pr
 
 - JSON estrito, limites de corpo, allowlist de planos, Origin/CSRF e limitação de requisições nas rotas do comprador.
 - Verificar assinatura no corpo bruto antes do parse. Order/Charge SHA-256 e nova Notificação ECDSA são contratos distintos; homologar por família, sem fallback permissivo.
-- O helper Order/Charge está isolado. As rotas atuais sempre recusam operação; não há webhook autenticado em produção nesta etapa.
+- O helper Order/Charge está isolado. Webhook e consulta financeira continuam recusando operação; criação Sandbox tem validação de entrada e sessão próprias.
 - Webhook só confirma recebimento após persistir evento e job na mesma transação. Deduplicar e reconciliar o estado atual; não aplicar status arbitrário do payload.
 - Não seguir links de webhooks. Origem da API e URLs de retorno fixas no servidor; links de checkout devem passar por HTTPS e hostname exato homologado.
 - Idempotência local com unicidade e trava de concorrência; suporte do provedor deve ser homologado especificamente em Checkout. Timeout de criação vira UNKNOWN, sem nova criação automática.

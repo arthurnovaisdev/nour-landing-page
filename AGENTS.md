@@ -15,7 +15,7 @@ Construir uma landing page premium, rápida e responsiva para a Nour, posicionad
 ## Fluxo de conversão
 
 - CTAs gerais como “Entrar para a Nour” levam à seção de planos.
-- Fluxo aprovado no Prompt 4: cada plano solicitará ao servidor um checkout exclusivo do PagBank; os botões continuam desativados nesta etapa de estrutura.
+- Prompt 5: botões iniciam checkout exclusivamente Sandbox/mocks. Contratos e configuração em docs/checkout-sandbox.md. Produção continua bloqueada.
 - WhatsApp é contato de apoio, com ícone reconhecível e rótulo acessível.
 - Nunca inventar links de pagamento nem disparar pagamentos em testes.
 
@@ -50,7 +50,7 @@ Construir uma landing page premium, rápida e responsiva para a Nour, posicionad
 - Netlify Functions + Netlify Database/Postgres; nenhum banco temporário das Functions.
 - Somente PAID reconciliado com a API, valor/moeda e vínculo do pedido permite pós-pagamento.
 - Código público não autentica comprador. Samuel confere e libera manualmente o VIP.
-- Rotas atuais bloqueadas por código; não habilitar por variável ou conectar credenciais nesta etapa.
+- Criação e sessão implementadas no Prompt 5, somente Sandbox/mocks. Webhook, consulta financeira, produção e liberação do VIP continuam bloqueados; não conectar credenciais nem publicar sem autorização.
 - Segredos configurados futuramente no painel seguro; nunca solicitar valores pela conversa.
 - Netlify Database Free usa créditos; confirmar condições da conta e cobrança antes de provisionar.
 - Não presumir assinatura ou idempotência de Checkout; homologar os contratos indicados na arquitetura.

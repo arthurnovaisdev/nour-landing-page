@@ -1,3 +1,44 @@
+# Verificações — Prompt 5, 16/09/2026
+
+## Resultado final
+
+- `npm test`: **27 testes aprovados, zero falhas**. Inclui os cinco cenários pedidos: criação válida dos três planos, plano inválido, requisição repetida, erro do gateway e ausência de configuração.
+- Cobertura adicional: preço/JSON/callback adulterados, Origin/Fetch Metadata, HTTP/conteúdo/stream, timeout de corpo, sessão/cookie seguro, limites compartilhados, concorrência HTTP, nova instância, rollback de reserva, falha de commit após gateway, lease vencido, resposta/valor/link inválidos e persistência de UNKNOWN.
+- Migrações 001 e 002 executadas em Postgres WASM isolado (PGlite) nos testes. Verificadas constraints, unicidade, rollback e consultas parametrizadas.
+- `npm run check`: sintaxe, fronteira pública, IDs, âncoras e ativos dos nove arquivos públicos aprovados. Inclui página de retorno e JavaScript do checkout; varredura heurística sem indícios de segredo.
+- `npm ci --ignore-scripts --dry-run --no-audit --no-fund`: lockfile aceito.
+- `npm audit --omit=dev --audit-level=high`: zero vulnerabilidades reportadas nas dependências de execução.
+- git diff --check: sem erros de whitespace após normalização dos arquivos alterados.
+- Arquivos .env reais e banco mock em .qa permanecem ignorados. Somente .env.example, com token e segredo em branco, integra o repositório.
+
+## Navegador e interface
+
+Edge local com Playwright; toda rede externa bloqueada. Nenhum checkout do PagBank aberto. Prévia servindo somente dist e usando pedidos mock persistidos localmente.
+
+- 1440, 1024, 768, 390 e 320 px: sem overflow horizontal, três planos habilitados com JavaScript, CTA para planos e FAQ funcionam.
+- Cliques duplos geram uma solicitação; nova tentativa preserva a chave; o corpo enviado contém somente planId.
+- Mock registra PENDING e informa simulação sem redirecionar.
+- Erro do gateway e configuração ausente mostram mensagens claras e nova tentativa. Estado incerto oferece verificar a mesma solicitação.
+- Cookie Secure/HttpOnly/SameSite=Lax verificado no navegador.
+- Teclado, foco, região de status, imagens com alt e prefers-reduced-motion verificados.
+- Sem JavaScript, botões permanecem desativados e há orientação visível. Corrigido o aviso que não era detectado como visível na primeira execução.
+- Retorno com query status=PAID não altera o conteúdo nem libera acesso.
+- Zero exceções JavaScript da aplicação. Dez requisições externas do ambiente local foram bloqueadas na execução final; nenhuma delas integra os ativos do projeto e nenhuma dependência externa foi adicionada ao navegador.
+- Capturas e roteiro desta máquina: .qa/checkout-mock-1440.png, .qa/checkout-mock-320.png e .qa/check-checkout-ui.mjs (ignorados pelo Git).
+
+## Limites e próxima homologação
+
+Nenhuma chamada autenticada ao PagBank, cobrança, migração remota, credencial conectada, provisionamento, publicação ou envio ao GitHub. Respostas HTTP do gateway foram simuladas; os testes não atestam homologação da conta Sandbox.
+
+PGlite utiliza uma conexão serializada: testa SQL real e concorrência HTTP, mas não reproduz disputa entre múltiplas conexões/instâncias Postgres remotas nem o transporte do SDK Netlify. Validar isso em ambiente Sandbox autorizado antes de exposição pública. Não foi usado banco temporário em Functions.
+
+Confirmar hostname PAY e formato de resposta da conta Sandbox; a allowlist é restritiva e rejeita qualquer divergência. Não presumir idempotência externa. Worker, autenticação de webhooks, consulta financeira, reconciliação, recuperação de sessões e liberação VIP continuam pendentes; as respectivas rotas permanecem bloqueadas. A checagem de segredos é heurística, e a revisão de acessibilidade não substitui auditoria completa.
+
+Implementação, fontes oficiais e execução: [checkout-sandbox.md](checkout-sandbox.md).
+
+---
+
+
 # Verificações — Prompt 4, 16/09/2026
 
 ## Resultado local

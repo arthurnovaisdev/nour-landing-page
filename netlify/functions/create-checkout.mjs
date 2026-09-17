@@ -1,9 +1,4 @@
-import { unavailable } from "../../server/payments/http.mjs";
+import { handlers } from "../../server/payments/runtime.mjs";
 
-// Contrato futuro: POST { planId }, sessão HttpOnly e Idempotency-Key.
-// Não recebe preço, status, URLs ou dados de cartão do navegador.
-export default async function handler(request) {
-  return unavailable(request, "POST");
-}
-
+export default handlers.checkout;
 export const config = { path: "/api/checkouts" };
