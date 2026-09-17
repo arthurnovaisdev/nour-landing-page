@@ -7,6 +7,7 @@
 - [ ] Regras de cobrança, cancelamento e reembolso confirmadas.
 - [ ] Benefícios de cada plano confirmados.
 - [ ] Três Links de Pagamento oficiais do PagBank recebidos, associados ao plano correto e validados sem efetuar compra real.
+- [ ] `monthlyPaymentUrl`, `semiannualPaymentUrl` e `annualPaymentUrl` preenchidos em `dist/assets/scripts/config.js`.
 - [ ] Contatos, domínio e redes sociais oficiais confirmados.
 
 ## Segurança
@@ -27,6 +28,7 @@
 - [ ] `prefers-reduced-motion` respeitado.
 - [ ] Links, âncoras, FAQs, WhatsApp e CTAs testados.
 - [ ] Console do navegador sem erros.
+- [ ] `/obrigado` testada diretamente, sem parâmetros e sem qualquer mensagem de confirmação técnica do pagamento.
 - [ ] Metadados, favicon, performance e imagens revisados.
 - [ ] Termos, privacidade e disclaimer revisados juridicamente.
 
@@ -44,6 +46,7 @@
 - [ ] Links usam HTTPS e o domínio oficial esperado do PagBank, sem redirecionador intermediário.
 - [ ] Mensagens e termos deixam claro que o pagamento é processado externamente pelo PagBank.
 - [ ] Processo operacional de conferência direta no PagBank e liberação manual do VIP definido pela Nour.
+- [ ] URL final `https://DOMINIO-OFICIAL/obrigado` revisada após a confirmação do domínio (página informativa, não confirmação de pagamento).
 - [ ] Cliente não é orientado a enviar comprovante nem a avisar Samuel após o pagamento.
 - [ ] WhatsApp permanece apresentado somente como canal de dúvidas, objeções e suporte.
 - [ ] Não existem banco, pedidos, painel, autenticação administrativa, webhook, polling, endpoints financeiros, Functions de pagamento, token PagBank ou dados financeiros no projeto.

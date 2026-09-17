@@ -1,9 +1,13 @@
 (() => {
   "use strict";
 
-  // Configuração pública única do WhatsApp comercial: país + DDD + número, somente dígitos.
-  const WHATSAPP_NUMBER = "5577981289835";
-  const COMMERCIAL_MESSAGE = "Olá, Samuel. Conheci a Nour pelo site e gostaria de tirar uma dúvida antes de escolher meu plano.";
+  const config = window.NourConfig;
+  if (!config) return;
+
+  const WHATSAPP_NUMBER = config.whatsappNumber;
+  const COMMERCIAL_MESSAGE = config.whatsappMessage;
+
+  if (!/^\d{10,15}$/.test(WHATSAPP_NUMBER)) return;
 
   function createLink(message) {
     return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;

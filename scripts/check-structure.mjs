@@ -19,6 +19,14 @@ async function files(directory) {
 const config = await readFile(resolve(root, "netlify.toml"), "utf8");
 assert.match(config, /publish\s*=\s*"dist"/);
 assert.doesNotMatch(config, /\[functions\]|\/api\//);
+const commercialConfig = await readFile(resolve(publicRoot, "assets/scripts/config.js"), "utf8");
+for (const property of ["monthlyPaymentUrl", "semiannualPaymentUrl", "annualPaymentUrl"]) {
+  assert.match(commercialConfig, new RegExp("\\b" + property + ":\\s*(?:null|\"https://[^\"]+\")"), "Configuração inválida: " + property);
+}
+assert.match(commercialConfig, /whatsappNumber:\s*"\d{10,15}"/);
+assert.doesNotMatch(commercialConfig, /PAGBANK_TOKEN|Authorization|Bearer|secret|password/i);
+const paymentScript = await readFile(resolve(publicRoot, "assets/scripts/payments.js"), "utf8");
+assert.doesNotMatch(paymentScript, /location\.search|URLSearchParams/, "Parâmetros da landing não podem controlar o pagamento");
 const publicFiles = await files(publicRoot);
 for (const file of publicFiles) {
   assert(!/(?:^|[\\/])\.|\.(?:sql|env|pem|key|map|mjs)$/i.test(relative(publicRoot, file)), "Arquivo privado na pasta pública");
@@ -50,4 +58,8 @@ for (const directory of ["scripts", "dist/assets/scripts"]) {
     assert.equal(result.status, 0, `Sintaxe inválida: ${relative(root, file)}`);
   }
 }
+const thankYouPage = await readFile(resolve(publicRoot, "obrigado/index.html"), "utf8");
+assert.match(thankYouPage, /Acessá-la não confirma nem comprova um pagamento/);
+assert.match(thankYouPage, /Você não precisa enviar comprovante nem avisar/);
+assert.doesNotMatch(thankYouPage, /status\s+PAID|código de pedido|grupo\.whatsapp|chat\.whatsapp/i);
 console.log(`Estrutura, sintaxe, âncoras e ${publicFiles.length} arquivos públicos verificados; varredura heurística sem indícios de segredos.`);

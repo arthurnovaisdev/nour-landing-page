@@ -14,7 +14,7 @@ img { max-width: 100%; height: auto; }
 .nav-links { font-size: .9375rem; gap: 28px; }
 .button { font-family: inherit; font-size: .875rem; font-weight: 600; letter-spacing: .015em; text-transform: none; padding: 14px 23px; min-height: 48px; line-height: 1.4; text-align: center; }
 .button-primary { box-shadow: none; background: #135bea; }
-.button:disabled { cursor: not-allowed; }.button:disabled:hover { transform: none; }.button-primary:disabled:hover { background: #135bea; }
+.button:disabled, .button.is-disabled { cursor: not-allowed; opacity: .58; }.button:disabled:hover, .button.is-disabled:hover { transform: none; box-shadow: none; }.button-primary:disabled:hover, .button-primary.is-disabled:hover { background: #135bea; }
 .hero { min-height: min(760px, calc(100svh - 96px)); padding: 76px 0 72px; background: radial-gradient(ellipse at 85% 45%, #0b1c3a 0, transparent 55%); }
 .hero::after { opacity: .18; }
 .hero-grid { grid-template-columns: minmax(0, 1.22fr) minmax(0, 1fr); gap: 64px; }
