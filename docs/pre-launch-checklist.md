@@ -66,3 +66,17 @@
 - [ ] Homologar hostname PAY e respostas reais da conta Sandbox, sem cobranças reais.
 - [ ] Validar SDK Netlify/concorrência multiconexão em banco Sandbox autorizado.
 - [ ] Implementar e homologar notificações, reconciliação, recuperação e painel nas etapas correspondentes.
+
+## Etapa local do Prompt 6
+
+- [x] Webhook separado com assinatura documentada, limites, inbox/job atômicos e idempotência.
+- [x] Consulta servidor a servidor com validação de vínculo/valor/moeda e bloqueio em divergências.
+- [x] Lease, fencing, retries limitados e revisão de falhas.
+- [x] Consulta mínima por cookie opaco com expiração; página responsiva com os estados solicitados.
+- [x] Estorno/chargeback bloqueiam elegibilidade e suspendem acesso local; tarefa manual deduplicada.
+- [x] Todos os estados simulados sem credenciais nem pagamentos; produção bloqueada.
+- [ ] Homologar coleção paginada de pagamentos do Checkout: envelope público insuficientemente detalhado; adaptador falha fechado.
+- [ ] Homologar envelope CBKS/ECDSA e referência do Checkout; configurar preferência CHARGEBACK em ambiente autorizado.
+- [ ] Validar concorrência multiconexão, worker na Netlify e alertas operacionais antes de exposição pública.
+
+Detalhes: [payment-confirmation.md](payment-confirmation.md). Os itens acima não autorizam publicação ou provisionamento.

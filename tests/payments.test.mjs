@@ -100,7 +100,7 @@ test("rotas não acessam rede nem habilitam pagamento por configuração ou payl
       const response = await handler(request);
       assert.equal(response.status, 503);
       assert.equal(response.headers.get("Cache-Control"), "no-store");
-      assert.deepEqual(await response.json(), { error: "PAYMENTS_NOT_IMPLEMENTED" });
+      assert.deepEqual(await response.json(), { error: "SANDBOX_ONLY" });
       assert.equal(response.headers.get("Access-Control-Allow-Origin"), null);
       const rejected = await handler(new Request(request.url, { method: "DELETE" }));
       assert.equal(rejected.status, 405);

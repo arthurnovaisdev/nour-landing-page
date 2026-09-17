@@ -50,7 +50,7 @@ Construir uma landing page premium, rápida e responsiva para a Nour, posicionad
 - Netlify Functions + Netlify Database/Postgres; nenhum banco temporário das Functions.
 - Somente PAID reconciliado com a API, valor/moeda e vínculo do pedido permite pós-pagamento.
 - Código público não autentica comprador. Samuel confere e libera manualmente o VIP.
-- Criação e sessão implementadas no Prompt 5, somente Sandbox/mocks. Webhook, consulta financeira, produção e liberação do VIP continuam bloqueados; não conectar credenciais nem publicar sem autorização.
+- Criação e sessão no Prompt 5; webhook, reconciliação e consulta no Prompt 6, somente Sandbox/mocks. Contratos e pendências de homologação em docs/payment-confirmation.md. Produção e liberação automática do VIP continuam bloqueadas; não conectar credenciais nem publicar sem autorização.
 - Segredos configurados futuramente no painel seguro; nunca solicitar valores pela conversa.
 - Netlify Database Free usa créditos; confirmar condições da conta e cobrança antes de provisionar.
 - Não presumir assinatura ou idempotência de Checkout; homologar os contratos indicados na arquitetura.

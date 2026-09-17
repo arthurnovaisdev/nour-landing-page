@@ -59,7 +59,7 @@ export function checkRequest(request, config) {
   if (request.headers.has("content-encoding")) throw new CheckoutError("CONTENT_ENCODING_NOT_ALLOWED", 415);
 }
 
-export async function readBody(request, limit = 1024) {
+export async function readBody(request, limit = 1024, raw = false) {
   const length = request.headers.get("content-length");
   if (length !== null && (!/^\d+$/.test(length) || Number(length) > limit))
     throw new CheckoutError("BODY_TOO_LARGE", 413);
@@ -82,7 +82,7 @@ export async function readBody(request, limit = 1024) {
       chunks.push(Buffer.from(value));
     }
     if (timedOut) throw new CheckoutError("BODY_TIMEOUT", 408);
-    return new TextDecoder("utf-8", { fatal: true }).decode(Buffer.concat(chunks));
+    const bytes = Buffer.concat(chunks); return raw ? bytes : new TextDecoder("utf-8", { fatal: true }).decode(bytes);
   } catch (error) {
     if (error instanceof CheckoutError) throw error;
     throw new CheckoutError("INVALID_BODY");

@@ -46,7 +46,7 @@ Não publique detalhes de uma vulnerabilidade em issues públicas. Registre o pr
 
 - JSON estrito, limites de corpo, allowlist de planos, Origin/CSRF e limitação de requisições nas rotas do comprador.
 - Verificar assinatura no corpo bruto antes do parse. Order/Charge SHA-256 e nova Notificação ECDSA são contratos distintos; homologar por família, sem fallback permissivo.
-- O helper Order/Charge está isolado. Webhook e consulta financeira continuam recusando operação; criação Sandbox tem validação de entrada e sessão próprias.
+- Prompt 6 conecta o verificador Checkout/Order e mantém ECDSA separado. Webhook, consulta e reconciliação funcionam somente com configuração Sandbox válida e contratos verificados; formato não homologado falha fechado. Ver docs/payment-confirmation.md.
 - Webhook só confirma recebimento após persistir evento e job na mesma transação. Deduplicar e reconciliar o estado atual; não aplicar status arbitrário do payload.
 - Não seguir links de webhooks. Origem da API e URLs de retorno fixas no servidor; links de checkout devem passar por HTTPS e hostname exato homologado.
 - Idempotência local com unicidade e trava de concorrência; suporte do provedor deve ser homologado especificamente em Checkout. Timeout de criação vira UNKNOWN, sem nova criação automática.

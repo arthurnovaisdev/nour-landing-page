@@ -1,3 +1,5 @@
+> Atualização vigente: o Prompt 6 implementa webhook, reconciliação e consulta em Sandbox/mocks. Leia [payment-confirmation.md](payment-confirmation.md), incluindo os contratos pendentes de homologação. As restrições descritas abaixo registram a etapa anterior.
+
 # Checkout Sandbox — Prompt 5
 
 Implementação local de 16/09/2026. Este documento atualiza o estado do Prompt 4 somente para criação de checkout. Nenhuma publicação, conta, banco remoto, credencial ou cobrança foi criada/configurada nesta entrega.

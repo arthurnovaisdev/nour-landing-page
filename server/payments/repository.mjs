@@ -20,9 +20,9 @@ export class CheckoutRepository {
   }
   async limit(route, ipHash, sessionHash) {
     const now = this.clock();
-    const buckets = [[route + ":global", route === "session" ? 200 : 100],
-      [route + ":ip:" + ipHash, 20]];
-    if (sessionHash) buckets.push([route + ":session:" + sessionHash, 5]);
+    const buckets = [[route + ":global", route === "webhook" ? 600 : route === "status" ? 600 : route === "session" ? 200 : 100],
+      [route + ":ip:" + ipHash, route === "webhook" ? 300 : route === "status" ? 60 : 20]];
+    if (sessionHash) buckets.push([route + ":session:" + sessionHash, route === "status" ? 30 : 5]);
     const allowed = await this.transaction(async db => {
       let allowed = true;
       // Ordem fixa evita deadlock. UPSERT serializa concorrência entre instâncias.
@@ -74,7 +74,11 @@ export class CheckoutRepository {
         }
         if (order.state === "UNKNOWN" || order.state === "CREATING") return { order, create: false };
         if (new Date(order.checkout_expires_at) <= now) throw new CheckoutError("CHECKOUT_EXPIRED", 409);
-        if (order.state === "CREATED") return { order, create: false };
+        if (order.state === "CREATED") {
+          if (order.paid_cents > 0 || order.disputed || order.review_required || ["PAID","REFUNDED","CHARGEBACK"].includes(order.status))
+            throw new CheckoutError("CHECKOUT_REVIEW_REQUIRED", 409);
+          return { order, create: false };
+        }
         if (order.state === "FAILED") {
           if (order.retry_count >= 3) throw new CheckoutError("RETRY_EXHAUSTED", 409);
           if (new Date(order.retry_after) > now) throw new CheckoutError("RETRY_LATER", 429,

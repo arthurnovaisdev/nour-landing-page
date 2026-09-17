@@ -1,3 +1,5 @@
+> Atualização vigente: o Prompt 6 implementa webhook, reconciliação e consulta em Sandbox/mocks. Leia [payment-confirmation.md](payment-confirmation.md), incluindo os contratos pendentes de homologação. As restrições descritas abaixo registram a etapa anterior.
+
 # Arquitetura de pagamentos Nour — Prompt 4
 
 > Atualização do Prompt 5: criação Sandbox, adaptador SQL, sessão e proteção contra abuso foram implementados. O estado vigente dessa etapa está em [checkout-sandbox.md](checkout-sandbox.md). As descrições de rotas bloqueadas e ausência de dependências abaixo registram o estado histórico do Prompt 4; webhook e consulta financeira continuam bloqueados.

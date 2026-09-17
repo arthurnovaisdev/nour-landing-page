@@ -1,8 +1,3 @@
-import { unavailable } from "../../server/payments/http.mjs";
-
-// Não retorna 2xx sem persistência. Autenticidade e reconciliação ainda pendentes.
-export default async function handler(request) {
-  return unavailable(request, "POST");
-}
-
+import { paymentHandlers } from "../../server/payments/runtime.mjs";
+export default paymentHandlers.webhook;
 export const config = { path: "/api/webhooks/pagbank" };

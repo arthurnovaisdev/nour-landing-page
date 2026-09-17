@@ -83,3 +83,7 @@ Documento principal: `docs/payment-architecture.md`. Verificações locais e lim
 - Contratos reais da conta Sandbox e concorrência multiconexão do Postgres ainda exigem homologação.
 - Implementação e fontes oficiais: docs/checkout-sandbox.md. Testes: docs/payment-verification.md.
 - Nenhuma publicação, cobrança real ou envio ao GitHub.
+
+## Estado após o Prompt 6 — confirmação local
+
+Webhook, inbox idempotente, fila durável, reconciliação Sandbox, consulta por sessão opaca e página de estados implementados e simulados. Somente PAID conferido pode produzir confirmação financeira; VIP permanece manual e sem convite público. Estorno e disputa suspendem o modelo local de acesso e geram tarefa de remoção manual. Contratos, fontes, limites e homologações pendentes: [payment-confirmation.md](payment-confirmation.md). Nenhuma publicação, credencial, provisão de banco ou pagamento real. Produção continua bloqueada.

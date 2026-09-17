@@ -1,8 +1,8 @@
 import { createHash, timingSafeEqual } from "node:crypto";
 
 // Exclusivo ao contrato Order/Charge x-authenticity-token.
-// Não está ligado à rota. Não presumir compatibilidade com todo webhook Checkout
-// ou com a nova API de Notificação ECDSA. Homologar cada família primeiro.
+// Checkout/Order conforme referência oficial; homologar eventos da conta.
+// ECDSA tem contrato separado, sem fallback entre famílias.
 export function verifyOrderChargeSignature(rawBody, signature, apiToken) {
   if (!Buffer.isBuffer(rawBody) || !rawBody.length || rawBody.length > 65536
     || typeof apiToken !== "string" || !apiToken.length

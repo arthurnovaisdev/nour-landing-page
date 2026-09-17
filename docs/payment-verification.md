@@ -73,3 +73,14 @@ Hashes SHA-256 iguais antes/depois:
 Os testes são locais, sem PagBank/Netlify reais. Não validam autenticação de Checkout em sandbox, SDK Database, concorrência SQL, transações, migração em Postgres, fila/worker, identidade do comprador ou administração. Não havia `psql` local disponível; a migração está preparada e exige execução em banco isolado na próxima etapa. A checagem de segredos é heurística e os testes básicos de acessibilidade não substituem auditoria completa.
 
 Os detalhes de implementação pendentes e critérios de homologação estão em `docs/payment-architecture.md` e `docs/pre-launch-checklist.md`. As Functions permanecem bloqueadas (503) até a implementação completa; testes aprovados não autorizam ativar pagamentos.
+
+## Verificação do Prompt 6
+
+- `npm test`: 44 testes, abrangendo regressão do checkout e 17 cenários de confirmação (alguns percorrem vários estados/casos). SQL de produção executado em PGlite somente de desenvolvimento; HTTP PagBank substituído por fixtures.
+- `npm run check`: estrutura pública, sintaxe, IDs HTML, ativos, âncoras e varredura heurística de segredos.
+- `scripts/check-confirmation-browser.mjs`: 40 combinações (oito estados × 1440, 1024, 768, 390 e 320 px), sessão inválida, teclado e retry seguro. Sem overflow, erros de JavaScript ou requisição externa do site. Injeção do antivírus local observada e bloqueada no teste; nenhum recurso externo foi autorizado.
+- Capturas locais inspecionadas em `.qa/confirmation-PAID-1440.png` e `.qa/confirmation-PAID-320.png`; demais capturas e banco mock ficam ignorados pelo Git.
+- O teste de navegador pode usar Playwright já instalado via `NOUR_QA_PACKAGE_JSON` (caminho para package.json que resolve Playwright), `NOUR_QA_BROWSER` (executável de teste) e `NOUR_QA_URL` (somente loopback; padrão 8766 com a prévia mock). Não adiciona Playwright ao site nem dependência de produção.
+- Concorrência HTTP, deduplicação, rollback, leases vencidos e fencing foram simulados; PGlite tem uma conexão e não comprova contenção multiconexão de Postgres remoto.
+- Não foram feitas chamadas autenticadas ao PagBank, pagamentos, publicação, provisionamento ou envio ao GitHub.
+- Os contratos reais de coleção paginada de pagamentos e notificação CBKS ainda precisam de homologação. Ausência/divergência de evidência bloqueia confirmação. Ver [payment-confirmation.md](payment-confirmation.md).

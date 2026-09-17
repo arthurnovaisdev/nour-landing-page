@@ -15,10 +15,12 @@ export async function testDatabase(dataDir) {
   const db = new PGlite(dataDir);
   const exists = await db.query("SELECT to_regclass('public.nour_orders') AS name");
   if (!exists.rows[0].name) {
-    for (const file of ["202609160001_payment_foundation.sql", "202609160002_sandbox_checkout.sql"]) {
+    for (const file of ["202609160001_payment_foundation.sql", "202609160002_sandbox_checkout.sql", "202609170003_payment_confirmation.sql"]) {
       await db.exec((await readFile(new URL("../netlify/database/migrations/" + file, import.meta.url), "utf8")).replace(/^\uFEFF/, ""));
     }
   }
+  const confirmation = await db.query("SELECT 1 FROM information_schema.columns WHERE table_name='nour_orders' AND column_name='reconciliation_pending'");
+  if (!confirmation.rows.length) await db.exec((await readFile(new URL("../netlify/database/migrations/202609170003_payment_confirmation.sql", import.meta.url), "utf8")).replace(/^\uFEFF/, ""));
   // PGlite tem uma conexão. O gate preserva BEGIN/COMMIT na mesma conexão.
   // Exercita concorrência HTTP, mas não substitui teste multiconexão do Postgres remoto.
   let tail = Promise.resolve();
