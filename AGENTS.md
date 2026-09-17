@@ -15,7 +15,7 @@ Construir uma landing page premium, rápida e responsiva para a Nour, posicionad
 ## Fluxo de conversão
 
 - CTAs gerais como “Entrar para a Nour” levam à seção de planos.
-- Prompt 5: botões iniciam checkout exclusivamente Sandbox/mocks. Contratos e configuração em docs/checkout-sandbox.md. Produção continua bloqueada.
+- Cada botão de plano aponta diretamente para o Link de Pagamento oficial do PagBank correspondente, quando esses links forem fornecidos e validados.
 - WhatsApp é contato de apoio, com ícone reconhecível e rótulo acessível.
 - Nunca inventar links de pagamento nem disparar pagamentos em testes.
 
@@ -23,9 +23,8 @@ Construir uma landing page premium, rápida e responsiva para a Nour, posicionad
 
 - Nunca inserir tokens, senhas, chaves, segredos ou credenciais no código do navegador.
 - Nunca usar prefixos públicos para segredos de servidor.
-- Não registrar valores reais em `.env.example`, documentação, logs ou commits.
-- Integrações que exigem segredo devem ser executadas no servidor.
-- Validar e restringir qualquer entrada recebida por formulário ou webhook.
+- Não registrar tokens, segredos ou credenciais em documentação, logs ou commits.
+- O projeto não utiliza integração autenticada, backend, formulário financeiro ou webhook.
 - Usar HTTPS, proteção contra redirecionamentos indevidos e atributos seguros em links externos.
 - Não adicionar scripts, CDNs, pixels ou bibliotecas externas sem necessidade e autorização.
 
@@ -44,13 +43,11 @@ Construir uma landing page premium, rápida e responsiva para a Nour, posicionad
 - Checklist de entrega: `docs/pre-launch-checklist.md`.
 
 
-## Pagamentos — decisão do Prompt 4
+## Pagamentos — escopo definitivo
 
-- Arquitetura e limites: `docs/payment-architecture.md`.
-- Netlify Functions + Netlify Database/Postgres; nenhum banco temporário das Functions.
-- Somente PAID reconciliado com a API, valor/moeda e vínculo do pedido permite pós-pagamento.
-- Código público não autentica comprador. Samuel confere e libera manualmente o VIP.
-- Criação e sessão no Prompt 5; webhook, reconciliação e consulta no Prompt 6, somente Sandbox/mocks. Contratos e pendências de homologação em docs/payment-confirmation.md. Produção e liberação automática do VIP continuam bloqueadas; não conectar credenciais nem publicar sem autorização.
-- Segredos configurados futuramente no painel seguro; nunca solicitar valores pela conversa.
-- Netlify Database Free usa créditos; confirmar condições da conta e cobrança antes de provisionar.
-- Não presumir assinatura ou idempotência de Checkout; homologar os contratos indicados na arquitetura.
+O projeto Nour é uma landing page comercial. Os pagamentos são processados externamente pelo PagBank. A landing page não processa, confirma nem armazena pagamentos. A conferência e a liberação do acesso ao grupo VIP são operacionais e realizadas manualmente pela Nour.
+
+- Não adicionar banco, pedidos, painel, autenticação administrativa, webhook, consulta de status, polling, API de checkout, Netlify Functions financeiras ou token PagBank.
+- O cliente não precisa enviar comprovante nem avisar Samuel após pagar.
+- O WhatsApp público serve apenas para dúvidas, objeções e suporte.
+- Nunca inventar Links de Pagamento. Manter os CTAs desativados até receber os links oficiais correspondentes.

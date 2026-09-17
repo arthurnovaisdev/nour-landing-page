@@ -18,7 +18,7 @@ async function files(directory) {
 }
 const config = await readFile(resolve(root, "netlify.toml"), "utf8");
 assert.match(config, /publish\s*=\s*"dist"/);
-assert.match(config, /directory\s*=\s*"netlify\/functions"/);
+assert.doesNotMatch(config, /\[functions\]|\/api\//);
 const publicFiles = await files(publicRoot);
 for (const file of publicFiles) {
   assert(!/(?:^|[\\/])\.|\.(?:sql|env|pem|key|map|mjs)$/i.test(relative(publicRoot, file)), "Arquivo privado na pasta pública");
@@ -43,7 +43,7 @@ for (const file of publicFiles.filter(file => file.endsWith(".html"))) {
     }
   }
 }
-for (const directory of ["server", "netlify/functions", "tests", "scripts", "dist/assets/scripts"]) {
+for (const directory of ["scripts", "dist/assets/scripts"]) {
   for (const file of await files(resolve(root, directory))) {
     if (!/\.(?:mjs|js)$/.test(file)) continue;
     const result = spawnSync(process.execPath, ["--check", file], { encoding: "utf8" });

@@ -261,14 +261,11 @@
             <p class="section-copy">Todos os planos oferecem acesso à experiência Nour. Escolha o período que melhor corresponde ao seu momento.</p>
           </div>
           <div class="pricing-grid">
-            <article class="price-card"><h3>Mensal</h3><div class="price"><small>R$</small> 100</div><p>Acesso à Nour por um mês.</p><button type="button" class="button button-secondary" disabled data-plan-id="mensal" aria-describedby="checkout-status">Escolher plano mensal</button></article>
-            <article class="price-card"><h3>Semestral</h3><div class="price"><small>R$</small> 500</div><p>Seis meses de acesso. Economia de R$ 100 em relação ao plano mensal.</p><button type="button" class="button button-secondary" disabled data-plan-id="semestral" aria-describedby="checkout-status">Escolher plano semestral</button></article>
-            <article class="price-card featured"><span class="plan-badge">Recomendado</span><h3>Anual</h3><div class="price"><small>R$</small> 800</div><p>Doze meses de acesso. Economia de R$ 400 em relação ao plano mensal.</p><button type="button" class="button button-primary" disabled data-plan-id="anual" aria-describedby="checkout-status">Escolher plano anual</button></article>
+            <article class="price-card"><h3>Mensal</h3><div class="price"><small>R$</small> 100</div><p>Acesso à Nour por um mês.</p><button type="button" class="button button-secondary" disabled aria-describedby="plan-links-status">Escolher plano mensal</button></article>
+            <article class="price-card"><h3>Semestral</h3><div class="price"><small>R$</small> 500</div><p>Seis meses de acesso. Economia de R$ 100 em relação ao plano mensal.</p><button type="button" class="button button-secondary" disabled aria-describedby="plan-links-status">Escolher plano semestral</button></article>
+            <article class="price-card featured"><span class="plan-badge">Recomendado</span><h3>Anual</h3><div class="price"><small>R$</small> 800</div><p>Doze meses de acesso. Economia de R$ 400 em relação ao plano mensal.</p><button type="button" class="button button-primary" disabled aria-describedby="plan-links-status">Escolher plano anual</button></article>
           </div>
-          <p class="checkout-status is-visible" id="checkout-status" role="status" aria-live="polite" aria-atomic="true" tabindex="-1">Ambiente de testes. Nenhuma cobrança real será feita.</p>
-          <button type="button" class="button button-secondary" id="checkout-retry" hidden>Tentar novamente</button>
-          <a class="button button-secondary" href="checkout-return.html">Acompanhar meu pedido</a>
-          <p class="checkout-status is-visible" id="checkout-support-note">Ative o JavaScript em um navegador atualizado para iniciar o checkout de testes.</p>
+          <p class="plan-links-status" id="plan-links-status">Os Links de Pagamento oficiais do PagBank serão disponibilizados aqui antes da contratação.</p>
         </div>
       </section>
 
@@ -306,17 +303,17 @@
         <div class="footer-top">
           <div class="footer-brand"><img src="assets/brand/nour-logo.png" alt="Nour" /><p>Inteligência e estratégia para navegar o mercado de ativos digitais.</p></div>
           <div class="footer-column"><h3>Navegação</h3><a href="#sobre">A Nour</a><a href="#nss">NSS</a><a href="#como-funciona">Como funciona</a><a href="#planos">Planos</a></div>
-          <div class="footer-column"><h3>Contato e informações</h3><span>Instagram · em breve</span><span>WhatsApp · em breve</span><span>Termos de Uso · em revisão</span><span>Política de Privacidade · em revisão</span></div>
+          <div class="footer-column"><h3>Contato e informações</h3><span>Instagram · em breve</span><a href="#whatsapp-commercial" data-whatsapp-commercial target="_blank" rel="noopener noreferrer">WhatsApp</a><span>Termos de Uso · em revisão</span><span>Política de Privacidade · em revisão</span></div>
         </div>
         <p class="disclaimer">A Nour fornece informações, análises de mercado, metodologia e conteúdo educacional. Não realiza custódia ou movimentação de recursos em nome dos usuários e não garante rentabilidade ou resultados. Ativos digitais envolvem riscos, incluindo volatilidade e perda de capital. Toda decisão é de responsabilidade do usuário. Texto sujeito a revisão jurídica antes da publicação.</p>
         <div class="copyright"><span>© 2026 Nour. Todos os direitos reservados.</span><span>Inteligência para um mercado em movimento.</span></div>
       </div>
     </footer>
 
-    <button type="button" class="whatsapp" disabled aria-label="Contato pelo WhatsApp — disponível em breve" title="WhatsApp disponível em breve">
+    <a id="whatsapp-commercial" class="whatsapp" href="#whatsapp-commercial" data-whatsapp-commercial target="_blank" rel="noopener noreferrer" aria-label="Falar com Samuel pelo WhatsApp sobre dúvidas antes de escolher um plano" title="Falar com Samuel pelo WhatsApp">
       <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" fill="currentColor"><path d="M20.52 3.48A11.87 11.87 0 0 0 12.05 0C5.46 0 .1 5.35.1 11.94c0 2.1.55 4.15 1.59 5.95L0 24l6.26-1.64a11.94 11.94 0 0 0 5.78 1.47h.01C18.64 23.83 24 18.48 24 11.9c0-3.19-1.24-6.18-3.48-8.42ZM12.05 21.8a9.9 9.9 0 0 1-5.05-1.38l-.36-.21-3.72.97.99-3.63-.24-.37a9.88 9.88 0 0 1-1.52-5.24c0-5.48 4.46-9.93 9.95-9.93 2.65 0 5.14 1.03 7.01 2.9a9.85 9.85 0 0 1 2.91 7.02c0 5.47-4.47 9.92-9.97 9.92Zm5.44-7.43c-.3-.15-1.77-.87-2.04-.97-.28-.1-.48-.15-.68.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.18-.3-.02-.46.13-.61.14-.13.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.08-.8.38-.27.3-1.04 1.02-1.04 2.49s1.07 2.89 1.22 3.09c.15.2 2.1 3.2 5.09 4.49.71.31 1.27.49 1.7.63.72.23 1.37.2 1.89.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35Z"/></svg>
-    </button>
+    </a>
+    <script src="assets/scripts/whatsapp.js" defer></script>
     <script src="assets/scripts/motion.js" defer></script>
-    <script src="assets/scripts/checkout.js" defer></script>
   </body>
 </html>

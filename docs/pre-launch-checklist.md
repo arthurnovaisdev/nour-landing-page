@@ -6,15 +6,15 @@
 - [ ] Entregas e frequência confirmadas.
 - [ ] Regras de cobrança, cancelamento e reembolso confirmadas.
 - [ ] Benefícios de cada plano confirmados.
-- [ ] Checkouts exclusivos por pedido homologados no sandbox; links retornados pelo provedor validados, sem compra real em testes.
+- [ ] Três Links de Pagamento oficiais do PagBank recebidos, associados ao plano correto e validados sem efetuar compra real.
 - [ ] Contatos, domínio e redes sociais oficiais confirmados.
 
 ## Segurança
 
 - [ ] Nenhum token, senha, segredo ou `.env` real está versionado.
-- [ ] Segredos do PagBank existem somente no servidor, caso a API seja utilizada.
+- [ ] Nenhum token, segredo ou credencial PagBank existe no projeto.
 - [ ] Links externos usam as proteções adequadas.
-- [ ] Formulários e webhooks validam entradas e rejeitam métodos ou formatos inesperados.
+- [ ] A landing não contém formulários financeiros, webhooks ou endpoints de pagamento.
 - [ ] Dependências e scripts externos foram justificados e revisados.
 - [ ] Conteúdo sensível não aparece em logs ou mensagens de erro.
 
@@ -38,45 +38,12 @@
 - [ ] Verificação final realizada no domínio de produção.
 
 
-## Pagamentos — bloqueios antes da ativação
+## Pagamentos externos — bloqueios antes da ativação
 
-- [ ] Conta Netlify Database elegível, franquia, custo atual, backups e limites conferidos.
-- [ ] Migração testada em Postgres isolado; transações, rollback e concorrência aprovados.
-- [ ] Adaptadores, sessões HttpOnly, CSRF e limitação persistente de requisições implementados.
-- [ ] Assinatura de cada família de webhook e idempotência do endpoint Checkout homologadas.
-- [ ] Evento repetido, replay e evento fora de ordem não duplicam/liberam acesso.
-- [ ] Só PAID consultado no servidor, com IDs/valor/moeda corretos, abre pós-pagamento.
-- [ ] Falhas de rede/banco e criação ambígua não produzem checkout duplicado ou falso sucesso.
-- [ ] Worker, reconciliação, alertas e recuperação de jobs testados.
-- [ ] Reembolso parcial/integral e chargeback bloqueiam elegibilidade e geram tarefa manual.
-- [ ] Área privada com MFA permite a Samuel conferir identidade, liberar uma vez e auditar.
-- [ ] Validade 1/6/12 meses, início manual e ausência de recorrência confirmados nos termos.
-- [ ] Expiração do acesso gera tarefa de remoção, sem alegar remoção automática no WhatsApp.
-- [ ] Código público não permite consultar dados privados ou comprovar pagamento.
-- [ ] Credenciais só no servidor e isolamento de sandbox/produção/previews revisado.
-- [ ] Política de retenção financeira/privacidade definida antes de persistir dados reais.
-- [ ] Habilitação de produção somente após implementar e homologar o fluxo completo. Botões do Prompt 5 limitados a Sandbox/mocks.
-
-## Etapa local do Prompt 5
-
-- [x] Function de checkout aceita apenas plano, com valores definidos no servidor.
-- [x] Sessão, limites persistentes, reserva transacional e reutilização de checkout implementados.
-- [x] Mocks sem credenciais e página de retorno sem liberação de acesso implementados.
-- [x] URLs fixas do servidor; POST para produção bloqueado por código.
-- [ ] Homologar hostname PAY e respostas reais da conta Sandbox, sem cobranças reais.
-- [ ] Validar SDK Netlify/concorrência multiconexão em banco Sandbox autorizado.
-- [ ] Implementar e homologar notificações, reconciliação, recuperação e painel nas etapas correspondentes.
-
-## Etapa local do Prompt 6
-
-- [x] Webhook separado com assinatura documentada, limites, inbox/job atômicos e idempotência.
-- [x] Consulta servidor a servidor com validação de vínculo/valor/moeda e bloqueio em divergências.
-- [x] Lease, fencing, retries limitados e revisão de falhas.
-- [x] Consulta mínima por cookie opaco com expiração; página responsiva com os estados solicitados.
-- [x] Estorno/chargeback bloqueiam elegibilidade e suspendem acesso local; tarefa manual deduplicada.
-- [x] Todos os estados simulados sem credenciais nem pagamentos; produção bloqueada.
-- [ ] Homologar coleção paginada de pagamentos do Checkout: envelope público insuficientemente detalhado; adaptador falha fechado.
-- [ ] Homologar envelope CBKS/ECDSA e referência do Checkout; configurar preferência CHARGEBACK em ambiente autorizado.
-- [ ] Validar concorrência multiconexão, worker na Netlify e alertas operacionais antes de exposição pública.
-
-Detalhes: [payment-confirmation.md](payment-confirmation.md). Os itens acima não autorizam publicação ou provisionamento.
+- [ ] Cada CTA aponta diretamente para o Link de Pagamento oficial do PagBank do plano correspondente.
+- [ ] Links usam HTTPS e o domínio oficial esperado do PagBank, sem redirecionador intermediário.
+- [ ] Mensagens e termos deixam claro que o pagamento é processado externamente pelo PagBank.
+- [ ] Processo operacional de conferência direta no PagBank e liberação manual do VIP definido pela Nour.
+- [ ] Cliente não é orientado a enviar comprovante nem a avisar Samuel após o pagamento.
+- [ ] WhatsApp permanece apresentado somente como canal de dúvidas, objeções e suporte.
+- [ ] Não existem banco, pedidos, painel, autenticação administrativa, webhook, polling, endpoints financeiros, Functions de pagamento, token PagBank ou dados financeiros no projeto.

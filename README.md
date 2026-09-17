@@ -4,7 +4,9 @@ Projeto da landing page da Nour, consultoria e inteligência em criptoativos apo
 
 ## Estado atual
 
-A pasta contém os ativos oficiais de marca, o briefing, a copy consolidada, prévias visuais e uma demonstração estática em `dist/`. Nenhuma publicação ou integração real de pagamento foi realizada nesta etapa.
+A pasta contém os ativos oficiais de marca, o briefing, a copy consolidada, prévias visuais e a landing page estática em `dist/`. Nenhuma publicação foi realizada nesta etapa.
+
+O projeto Nour é uma landing page comercial. Os pagamentos são processados externamente pelo PagBank. A landing page não processa, confirma nem armazena pagamentos. A conferência e a liberação do acesso ao grupo VIP são operacionais e realizadas manualmente pela Nour.
 
 ## Estrutura
 
@@ -16,7 +18,6 @@ A pasta contém os ativos oficiais de marca, o briefing, a copy consolidada, pr�
 │   └── assets/styles/         # Base visual e identidade responsiva
 ├── docs/                      # Contexto, copy, decisões e checklist
 ├── previews/                  # Prévias visuais aprovadas e históricas
-├── .env.example              # Nomes das variáveis, sem valores reais
 ├── AGENTS.md                 # Regras permanentes para futuras sessões
 └── SECURITY.md               # Política de segurança do projeto
 ```
@@ -25,26 +26,14 @@ A pasta contém os ativos oficiais de marca, o briefing, a copy consolidada, pr�
 
 O projeto permanece propositalmente estático e sem dependências. Qualquer servidor HTTP local pode servir a pasta `dist/`. Abrir o arquivo diretamente pelo sistema pode limitar alguns comportamentos do navegador; prefira um servidor local durante a validação.
 
-Use `dist/index.html` para a estrutura e `dist/assets/styles/identity.css` para os ajustes de identidade. `base.css` preserva os componentes da prévia anterior. Sirva somente `dist/`, nunca a raiz que contém contexto interno e documentos do cliente. Os botões de compra e contato estão desativados até a etapa de integrações.
-
-## Variáveis de ambiente
-
-Somente crie um arquivo `.env` quando uma integração realmente precisar dele. O `.env.example` contém somente nomes e valores fictícios reservados ao servidor. Tokens do PagBank e material de autenticação são exclusivos do servidor e nunca podem aparecer no HTML ou JavaScript entregue ao visitante.
+Use `dist/index.html` para a estrutura e `dist/assets/styles/identity.css` para os ajustes de identidade. `base.css` preserva os componentes da prévia anterior. Sirva somente `dist/`, nunca a raiz que contém contexto interno e documentos do cliente. O WhatsApp comercial está ativo. Os botões dos planos permanecem desativados até que os Links de Pagamento oficiais correspondentes sejam fornecidos e validados.
 
 ## Publicação
 
 A publicação, a criação do repositório remoto e o envio ao GitHub dependem de autorização explícita. Antes disso, siga `docs/pre-launch-checklist.md` e confirme todas as pendências comerciais e jurídicas registradas em `docs/landing-page-v2.md`.
 
-## Estrutura de pagamentos — Prompt 4
+## Pagamentos
 
-Arquitetura completa em `docs/payment-architecture.md`; evidências em `docs/payment-verification.md`.
+Cada botão de plano deverá apontar diretamente para seu Link de Pagamento oficial do PagBank. Todo o processamento financeiro acontece no ambiente do PagBank. A Nour confere a venda diretamente no provedor e Samuel libera manualmente o acesso ao grupo VIP, sem exigir comprovante ou aviso do cliente.
 
-- `netlify.toml`: pasta pública `dist/` e diretório das Functions.
-- `netlify/functions/`: criação de checkout, consulta de pedido e webhook, todos bloqueados (503).
-- `server/payments/`: políticas internas e verificador isolado Order/Charge, sem chamadas externas.
-- `netlify/database/migrations/`: modelo Postgres para pedidos, sessões, eventos, fila e acesso manual; não aplicado.
-- `tests/` e `scripts/`: verificações locais usando apenas Node.js.
-
-Com Node.js 22 ou superior, execute `npm test` e `npm run check`. Não é necessário instalar dependências para estas verificações. Não há comando de deploy. O frontend continua estático e intocado.
-
-Netlify Database foi escolhido por persistência e transações; está documentado no plano Free baseado em créditos, sujeito à franquia e às condições vigentes. Nenhuma conta foi conectada. Adaptadores, worker, sessões e área privada do Samuel serão implementados na próxima etapa, antes de ativar os botões. Não execute publicação ou migração remota nesta etapa.
+Não há API de checkout, Functions, banco, pedidos, webhook, polling, painel ou variáveis de ambiente do PagBank neste projeto. Com Node.js 22 ou superior, execute `npm run build` e `npm run check`. Não há comando de deploy.

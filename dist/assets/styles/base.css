@@ -336,8 +336,7 @@ h1 span { color: #9acbff; }
 .price small { font-size: 1rem; color: #a8b4c7; letter-spacing: 0; }
 .price-card p { min-height: 48px; margin: 0 0 28px; color: #8794a7; line-height: 1.55; }
 .price-card .button { width: 100%; }
-.checkout-status { min-height: 1.5em; margin: 20px auto 0; color: #8fa1b9; font-size: 0.78rem; text-align: center; opacity: 0; transform: translateY(4px); transition: opacity 180ms ease, transform 180ms ease; }
-.checkout-status.is-visible { opacity: 1; transform: none; }
+.plan-links-status { min-height: 1.5em; margin: 20px auto 0; color: #8fa1b9; font-size: 0.78rem; text-align: center; }
 
 .faq-layout { display: grid; grid-template-columns: 0.72fr 1.28fr; gap: clamp(55px, 8vw, 110px); align-items: start; }
 .faq-list { border-top: 1px solid var(--line); }

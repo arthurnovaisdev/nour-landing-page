@@ -71,16 +71,6 @@
     nssVisuals.forEach((visual) => nssObserver.observe(visual));
   }
 
-  const hero = document.querySelector(".hero");
-  const whatsapp = document.querySelector(".whatsapp");
-  if (hero && whatsapp && "IntersectionObserver" in window) {
-    const whatsappObserver = new IntersectionObserver(
-      ([entry]) => whatsapp.classList.toggle("is-hidden", entry.isIntersecting),
-      { threshold: 0.12 },
-    );
-    whatsappObserver.observe(hero);
-  }
-
   motionPreference.addEventListener?.("change", (event) => {
     if (event.matches) showEverything();
   });
