@@ -25,7 +25,7 @@ Esta versão reposiciona a primeira tela para deixar claro que a Nour atua com c
 - Confirmar se os pagamentos são únicos ou parcelados.
 - Confirmar a assinatura oficial do logo.
 - Receber a foto profissional de Samuel Seza.
-- Links de Pagamento oficiais do PagBank recebidos e configurados para cada plano; domínio oficial definido como `nourcrypto.com.br`, com vinculação Netlify/DNS ainda pendente; confirmar e-mail e identificadores de analytics, se autorizados.
+- Links de Pagamento mensal (R$ 100), semestral (R$ 500) e anual (R$ 900) recebidos, validados e configurados. Domínio oficial definido como `nourcrypto.com.br`, com vinculação Netlify/DNS ainda pendente; confirmar e-mail e identificadores de analytics, se autorizados.
 
 ## Arquitetura recomendada
 
@@ -382,7 +382,7 @@ Todos os planos oferecem acesso à experiência Nour. Escolha o período que mel
 
 **Anual recomendado**
 
-- R$ 800
+- R$ 900
 - Acesso por doze meses
 - Economia de R$ 400 em relação ao plano mensal pelo mesmo período
 - CTA: ENTRAR PARA A NOUR

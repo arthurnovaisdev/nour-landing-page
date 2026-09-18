@@ -46,7 +46,7 @@ A publicação, a criação do repositório remoto e o envio ao GitHub dependem 
 
 ## Pagamentos
 
-Cada botão de plano aponta diretamente para seu Link de Pagamento oficial do PagBank. Todo o processamento financeiro acontece no ambiente do PagBank. A Nour confere a venda diretamente no provedor e Samuel libera manualmente o acesso ao grupo VIP, sem exigir comprovante ou aviso do cliente.
+Cada botão de plano aponta diretamente para seu Link de Pagamento oficial do PagBank. Todo o processamento financeiro acontece no ambiente do PagBank. A Nour confere a venda diretamente no provedor e Samuel libera manualmente o acesso ao grupo VIP, sem exigir comprovante ou aviso do cliente. Os valores oficiais são R$ 100 no mensal, R$ 500 no semestral e R$ 900 no anual.
 
 Não há API de checkout, Functions, banco, pedidos, webhook, polling, painel ou variáveis de ambiente do PagBank neste projeto. Com Node.js 22 ou superior, execute `npm run build`, `npm run lint` e `npm run check`. Não há comando de deploy.
 

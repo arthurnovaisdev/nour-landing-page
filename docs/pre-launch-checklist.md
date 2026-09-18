@@ -6,7 +6,7 @@
 - [ ] Entregas e frequência confirmadas.
 - [ ] Regras de cobrança, cancelamento e reembolso confirmadas.
 - [ ] Benefícios de cada plano confirmados.
-- [x] Três Links de Pagamento oficiais do PagBank recebidos, associados ao plano correto e validados sem efetuar compra real.
+- [x] Três Links de Pagamento oficiais do PagBank recebidos, associados aos valores aprovados e validados sem efetuar compra real: mensal R$ 100, semestral R$ 500 e anual R$ 900.
 - [x] `monthlyPaymentUrl`, `semiannualPaymentUrl` e `annualPaymentUrl` preenchidos em `dist/assets/scripts/config.js`.
 - [ ] Contatos e redes sociais oficiais confirmados; domínio oficial definido como `nourcrypto.com.br` e ainda pendente de vinculação na Netlify/DNS.
 

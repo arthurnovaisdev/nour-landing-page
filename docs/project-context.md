@@ -11,7 +11,7 @@
 - Seção “O desafio” reequilibrada com o monograma oficial, anéis discretos e títulos proporcionais.
 - Oito entregas, seis etapas de funcionamento, fundador, perfis, três planos e oito FAQs implementados.
 - WhatsApp usa símbolo local em SVG e funciona como apoio comercial. Os três botões de pagamento usam os Links de Pagamento oficiais centralizados em `dist/assets/scripts/config.js`; redes e textos legais não possuem links provisórios.
-- Nenhum serviço externo conectado. A demonstração usa `noindex, nofollow`; remover somente na preparação da publicação autorizada.
+- Nenhum serviço externo conectado. A página principal e as páginas legais estão preparadas para indexação; `/obrigado` mantém `noindex, nofollow` por ser uma rota informativa de pós-checkout.
 - Conteúdo legível sem JavaScript. Refinamento de motion contínuo fica para o Prompt 3.
 - A frase do fundador “Dinheiro não aceita desaforo.” consta no DOCX do cliente e foi incluída como citação secundária.
 - Frequência e condições de cancelamento ainda pendentes: FAQ informa que serão disponibilizadas antes da contratação.
@@ -65,3 +65,4 @@ O projeto Nour é uma landing page comercial. Os pagamentos são processados ext
 - O projeto não possui banco, pedidos, painel, autenticação administrativa, webhook, reconciliação, polling, endpoint de status, API de checkout, Functions financeiras, token PagBank ou liberação automática.
 - A Netlify permanece somente como hospedagem estática de `dist/`.
 - A infraestrutura local dos Prompts 4 a 6 foi removida sem publicação.
+- Atualização comercial de 18/09/2026: mensal validado em R$ 100, semestral em R$ 500 e anual validado em R$ 900.

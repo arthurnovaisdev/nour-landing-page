@@ -60,4 +60,6 @@
   } else if (availablePlans > 0) {
     status.textContent = "Alguns Links de Pagamento oficiais ainda estão pendentes. Planos indisponíveis permanecem bloqueados; os demais direcionam ao PagBank para concluir o pagamento.";
   }
+
+  status.classList.toggle("sr-only", availablePlans === 3);
 })();

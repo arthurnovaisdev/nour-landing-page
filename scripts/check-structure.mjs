@@ -19,6 +19,21 @@ async function files(directory) {
 const config = await readFile(resolve(root, "netlify.toml"), "utf8");
 assert.match(config, /publish\s*=\s*"dist"/);
 assert.doesNotMatch(config, /\[functions\]|\/api\//);
+for (const header of [
+  "Content-Security-Policy",
+  "Cross-Origin-Opener-Policy",
+  "Cross-Origin-Resource-Policy",
+  "Permissions-Policy",
+  "Referrer-Policy",
+  "Strict-Transport-Security",
+  "X-Content-Type-Options",
+  "X-Frame-Options",
+]) {
+  assert(config.includes(header), "Cabeçalho de segurança ausente: " + header);
+}
+assert.match(config, /script-src 'self'/);
+assert.match(config, /style-src 'self'/);
+assert.doesNotMatch(config, /unsafe-inline|unsafe-eval/);
 const commercialConfig = await readFile(resolve(publicRoot, "assets/scripts/config.js"), "utf8");
 const expectedPayments = {
   monthlyPaymentUrl: "https://pag.ae/82an7DjHH",
@@ -43,9 +58,23 @@ for (const file of publicFiles) {
   if (!/\.(?:html|css|js|json|txt)$/i.test(file)) continue;
   const text = await readFile(file, "utf8");
   assert(!/PAGBANK_API_TOKEN|CHECKOUT_ABUSE_SECRET|NETLIFY_DB_|@netlify\/database|@electric-sql|process\.env|postgres(?:ql)?:\/\/|Bearer\s+[A-Za-z0-9_-]{12}|-----BEGIN.*PRIVATE KEY|\.\.[/\\]server/i.test(text), "Indício de segredo ou import privado no conteúdo público");
+  if (file.endsWith(".js")) {
+    assert.doesNotMatch(text, /location\.search|URLSearchParams|document\.URL/i, "Parâmetros da URL não podem controlar configuração pública");
+  }
 }
 for (const file of publicFiles.filter(file => file.endsWith(".html"))) {
   const html = await readFile(file, "utf8");
+  assert.doesNotMatch(html, /<script(?![^>]*\bsrc=)[^>]*>[\s\S]*?<\/script>/i, "Script inline incompatível com a CSP");
+  assert.doesNotMatch(html, /\sstyle\s*=/i, "Estilo inline incompatível com a CSP");
+  for (const [tag] of html.matchAll(/<img\b[^>]*>/gi)) {
+    assert.match(tag, /\balt="[^"]*"/, "Imagem sem texto alternativo explícito");
+    assert.match(tag, /\bwidth="\d+"/, "Imagem sem largura intrínseca");
+    assert.match(tag, /\bheight="\d+"/, "Imagem sem altura intrínseca");
+  }
+  for (const [tag] of html.matchAll(/<a\b[^>]*\btarget="_blank"[^>]*>/gi)) {
+    assert.match(tag, /\brel="[^"]*\bnoopener\b[^"]*"/, "Link externo sem noopener");
+    assert.match(tag, /\brel="[^"]*\bnoreferrer\b[^"]*"/, "Link externo sem noreferrer");
+  }
   const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(m => m[1]);
   assert.equal(new Set(ids).size, ids.length, "IDs HTML duplicados");
   for (const [, target] of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
@@ -79,6 +108,10 @@ assert(landingPage.includes("mailto:contato@nourcrypto.com.br"));
 assert(!/em breve|em revisão/i.test(landingPage));
 assert(landingPage.includes("Ao escolher um plano, você será direcionado ao PagBank para concluir o pagamento."));
 assert(landingPage.includes("sem necessidade de enviar comprovante ou avisar que pagou."));
+for (const [plan, price] of Object.entries({ monthly: "100", semiannual: "500", annual: "900" })) {
+  assert.match(landingPage, new RegExp(`class="price"[^>]*><small>R\\$<\\/small>\\s*${price}<`), "Preço incorreto: " + plan);
+  assert.equal([...landingPage.matchAll(new RegExp(`data-payment-plan="${plan}"`, "g"))].length, 1, "CTA duplicado ou ausente: " + plan);
+}
 assert(termsPage.includes("não garante rentabilidade"));
 assert(termsPage.includes("mailto:contato@nourcrypto.com.br"));
 for (const service of ["Netlify", "PagBank", "WhatsApp", "Instagram"]) {
@@ -87,8 +120,10 @@ for (const service of ["Netlify", "PagBank", "WhatsApp", "Instagram"]) {
 assert(privacyPage.includes("mailto:contato@nourcrypto.com.br"));
 assert.match(landingPage, /<link rel="canonical" href="https:\/\/nourcrypto\.com\.br" \/>/);
 assert.match(landingPage, /<meta property="og:url" content="https:\/\/nourcrypto\.com\.br" \/>/);
+assert.doesNotMatch(landingPage, /noindex|nofollow/i);
 assert.match(thankYouPage, /<link rel="canonical" href="https:\/\/nourcrypto\.com\.br\/obrigado" \/>/);
 assert.match(thankYouPage, /<meta property="og:url" content="https:\/\/nourcrypto\.com\.br\/obrigado" \/>/);
+assert.match(thankYouPage, /<meta name="robots" content="noindex, nofollow" \/>/);
 assert.match(thankYouPage, /Acessá-la não confirma nem comprova um pagamento/);
 assert.match(thankYouPage, /Você não precisa enviar comprovante nem avisar/);
 assert.doesNotMatch(thankYouPage, /status\s+PAID|código de pedido|grupo\.whatsapp|chat\.whatsapp/i);
