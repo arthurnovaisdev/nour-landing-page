@@ -25,7 +25,7 @@ Esta versão reposiciona a primeira tela para deixar claro que a Nour atua com c
 - Confirmar se os pagamentos são únicos ou parcelados.
 - Confirmar a assinatura oficial do logo.
 - Receber a foto profissional de Samuel Seza.
-- Receber e validar os Links de Pagamento oficiais do PagBank para cada plano; confirmar domínio, e-mail e identificadores de analytics, se autorizados.
+- Links de Pagamento oficiais do PagBank recebidos e configurados para cada plano; domínio oficial definido como `nourcrypto.com.br`, com vinculação Netlify/DNS ainda pendente; confirmar e-mail e identificadores de analytics, se autorizados.
 
 ## Arquitetura recomendada
 
@@ -565,4 +565,4 @@ O projeto Nour é uma landing page comercial. Os pagamentos são processados ext
 
 A jornada aprovada é landing page → escolha do plano → Link de Pagamento oficial correspondente → processamento integral no PagBank → conferência manual da venda pela Nour → liberação manual do VIP por Samuel. O cliente não envia comprovante e não precisa avisar Samuel após pagar. O WhatsApp público é apenas para dúvidas, objeções e suporte.
 
-Não fazem parte do projeto: banco, pedidos, painel administrativo, autenticação, webhook, consulta de status, polling, código de pedido, API de checkout, Functions financeiras, token PagBank, armazenamento financeiro ou liberação automática. Os botões permanecem desativados até que os três links oficiais sejam fornecidos; nenhum link será inventado.
+Não fazem parte do projeto: banco, pedidos, painel administrativo, autenticação, webhook, consulta de status, polling, código de pedido, API de checkout, Functions financeiras, token PagBank, armazenamento financeiro ou liberação automática. Os três links oficiais estão configurados; nenhum destino pode ser obtido de parâmetros da URL.

@@ -10,7 +10,7 @@
 - NSS identificado no início e detalhado em seção própria com exemplo ilustrativo.
 - Seção “O desafio” reequilibrada com o monograma oficial, anéis discretos e títulos proporcionais.
 - Oito entregas, seis etapas de funcionamento, fundador, perfis, três planos e oito FAQs implementados.
-- WhatsApp usa símbolo local em SVG e funciona como apoio comercial. Os botões de pagamento permanecem desativados até a inclusão dos links oficiais; redes e textos legais não possuem links provisórios.
+- WhatsApp usa símbolo local em SVG e funciona como apoio comercial. Os três botões de pagamento usam os Links de Pagamento oficiais centralizados em `dist/assets/scripts/config.js`; redes e textos legais não possuem links provisórios.
 - Nenhum serviço externo conectado. A demonstração usa `noindex, nofollow`; remover somente na preparação da publicação autorizada.
 - Conteúdo legível sem JavaScript. Refinamento de motion contínuo fica para o Prompt 3.
 - A frase do fundador “Dinheiro não aceita desaforo.” consta no DOCX do cliente e foi incluída como citação secundária.
@@ -46,11 +46,10 @@ Na seção “O desafio”, o ícone da Nour pode ocupar o espaço negativo com 
 
 ## Pendências externas
 
-- Receber e validar os três Links de Pagamento oficiais do PagBank, um por plano.
 - Regras de cobrança, parcelamento, renovação, cancelamento e reembolso.
 - Frequência final das análises, calls e atualizações.
 - Revisão jurídica do posicionamento e dos textos legais.
-- Domínio, e-mail oficial e identificadores de analytics, caso aprovados.
+- Vinculação de `nourcrypto.com.br` à Netlify, configuração DNS e HTTPS; e-mail oficial e identificadores de analytics, caso aprovados.
 - Foto profissional do fundador, se for utilizada.
 
 Para copy completa, arquitetura e critérios de validação, consulte `docs/landing-page-v2.md`.
@@ -59,7 +58,7 @@ Para copy completa, arquitetura e critérios de validação, consulte `docs/land
 
 O projeto Nour é uma landing page comercial. Os pagamentos são processados externamente pelo PagBank. A landing page não processa, confirma nem armazena pagamentos. A conferência e a liberação do acesso ao grupo VIP são operacionais e realizadas manualmente pela Nour.
 
-- O visitante escolhe um plano e, quando os links oficiais forem fornecidos, segue diretamente ao Link de Pagamento PagBank correspondente.
+- O visitante escolhe um plano e segue diretamente ao Link de Pagamento PagBank correspondente.
 - Todo o processamento financeiro e a consulta da venda acontecem no PagBank.
 - Samuel confere a venda e libera manualmente o grupo VIP. O cliente não precisa enviar comprovante nem avisar que pagou.
 - O WhatsApp público permanece apenas para dúvidas, objeções e suporte.

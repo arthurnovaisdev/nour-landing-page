@@ -20,12 +20,22 @@ const config = await readFile(resolve(root, "netlify.toml"), "utf8");
 assert.match(config, /publish\s*=\s*"dist"/);
 assert.doesNotMatch(config, /\[functions\]|\/api\//);
 const commercialConfig = await readFile(resolve(publicRoot, "assets/scripts/config.js"), "utf8");
-for (const property of ["monthlyPaymentUrl", "semiannualPaymentUrl", "annualPaymentUrl"]) {
-  assert.match(commercialConfig, new RegExp("\\b" + property + ":\\s*(?:null|\"https://[^\"]+\")"), "Configuração inválida: " + property);
+const expectedPayments = {
+  monthlyPaymentUrl: "https://pag.ae/82an7DjHH",
+  semiannualPaymentUrl: "https://pag.ae/82an7kw61",
+  annualPaymentUrl: "https://pag.ae/82an6e-Kn",
+};
+for (const [property, url] of Object.entries(expectedPayments)) {
+  assert(commercialConfig.includes(`${property}: "${url}"`), "Link de Pagamento incorreto: " + property);
 }
+assert(commercialConfig.includes('instagramUrl: "https://instagram.com/sam_seza"'));
+assert(commercialConfig.includes('contactEmail: "contato@nourcrypto.com.br"'));
 assert.match(commercialConfig, /whatsappNumber:\s*"\d{10,15}"/);
 assert.doesNotMatch(commercialConfig, /PAGBANK_TOKEN|Authorization|Bearer|secret|password/i);
 const paymentScript = await readFile(resolve(publicRoot, "assets/scripts/payments.js"), "utf8");
+for (const [plan, property] of Object.entries({ monthly: "monthlyPaymentUrl", semiannual: "semiannualPaymentUrl", annual: "annualPaymentUrl" })) {
+  assert(paymentScript.includes(`${plan}: "${property}"`), "CTA associado à configuração incorreta: " + plan);
+}
 assert.doesNotMatch(paymentScript, /location\.search|URLSearchParams/, "Parâmetros da landing não podem controlar o pagamento");
 const publicFiles = await files(publicRoot);
 for (const file of publicFiles) {
@@ -39,9 +49,11 @@ for (const file of publicFiles.filter(file => file.endsWith(".html"))) {
   const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(m => m[1]);
   assert.equal(new Set(ids).size, ids.length, "IDs HTML duplicados");
   for (const [, target] of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
-    if (/^https?:/.test(target)) continue;
+    if (/^[a-z][a-z0-9+.-]*:/i.test(target)) continue;
     const [pathname, anchor] = target.split("#");
-    const path = pathname ? resolve(dirname(file), pathname.split("?")[0]) : file;
+    const candidate = pathname ? resolve(dirname(file), pathname.split("?")[0]) : file;
+    const candidateStat = await stat(candidate);
+    const path = candidateStat.isDirectory() ? resolve(candidate, "index.html") : candidate;
     assert(!relative(publicRoot, path).startsWith(".."), "Link fora da pasta pública");
     assert((await stat(path)).isFile(), "Ativo local ausente");
     if (anchor) {
@@ -59,6 +71,24 @@ for (const directory of ["scripts", "dist/assets/scripts"]) {
   }
 }
 const thankYouPage = await readFile(resolve(publicRoot, "obrigado/index.html"), "utf8");
+const landingPage = await readFile(resolve(publicRoot, "index.html"), "utf8");
+const termsPage = await readFile(resolve(publicRoot, "termos-de-uso/index.html"), "utf8");
+const privacyPage = await readFile(resolve(publicRoot, "politica-de-privacidade/index.html"), "utf8");
+assert(landingPage.includes("Instagram · @sam_seza"));
+assert(landingPage.includes("mailto:contato@nourcrypto.com.br"));
+assert(!/em breve|em revisão/i.test(landingPage));
+assert(landingPage.includes("Ao escolher um plano, você será direcionado ao PagBank para concluir o pagamento."));
+assert(landingPage.includes("sem necessidade de enviar comprovante ou avisar que pagou."));
+assert(termsPage.includes("não garante rentabilidade"));
+assert(termsPage.includes("mailto:contato@nourcrypto.com.br"));
+for (const service of ["Netlify", "PagBank", "WhatsApp", "Instagram"]) {
+  assert(privacyPage.includes(service), "Serviço externo ausente na Política de Privacidade: " + service);
+}
+assert(privacyPage.includes("mailto:contato@nourcrypto.com.br"));
+assert.match(landingPage, /<link rel="canonical" href="https:\/\/nourcrypto\.com\.br" \/>/);
+assert.match(landingPage, /<meta property="og:url" content="https:\/\/nourcrypto\.com\.br" \/>/);
+assert.match(thankYouPage, /<link rel="canonical" href="https:\/\/nourcrypto\.com\.br\/obrigado" \/>/);
+assert.match(thankYouPage, /<meta property="og:url" content="https:\/\/nourcrypto\.com\.br\/obrigado" \/>/);
 assert.match(thankYouPage, /Acessá-la não confirma nem comprova um pagamento/);
 assert.match(thankYouPage, /Você não precisa enviar comprovante nem avisar/);
 assert.doesNotMatch(thankYouPage, /status\s+PAID|código de pedido|grupo\.whatsapp|chat\.whatsapp/i);
