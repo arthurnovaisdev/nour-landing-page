@@ -1,18 +1,10 @@
 # SEO e indexação antes do deploy
 
-## Imagem social pendente
+## Imagem social
 
-Ainda não existe uma imagem definitiva e exclusiva para compartilhamento social. Não foi usado logo, screenshot ou preview de layout como substituto.
+A imagem social definitiva está integrada em `dist/assets/social/nour-social-preview.jpg`, no formato JPEG e com 1200 × 630 px. A URL pública prevista é `https://nourcrypto.com.br/assets/social/nour-social-preview.jpg`.
 
-Antes do deploy, exportar a arte aprovada com:
-
-- caminho público: `dist/assets/social/nour-social-preview.jpg`;
-- URL: `https://nourcrypto.com.br/assets/social/nour-social-preview.jpg`;
-- dimensão recomendada: `1200 × 630 px` (`1.91:1`);
-- formato: JPG ou PNG otimizado;
-- conteúdo: identidade oficial Nour, texto curto legível e sem promessas de rentabilidade.
-
-Após a aprovação, adicionar `og:image`, `og:image:width` (`1200`), `og:image:height` (`630`) e `og:image:alt`. Trocar `twitter:card` de `summary` para `summary_large_image` e adicionar `twitter:image` e `twitter:image:alt`. Não manter duas declarações de `twitter:card`.
+A página principal usa essa URL em `og:image` e `twitter:image`, com `twitter:card` configurado como `summary_large_image`.
 
 ## Search Console depois do deploy
 

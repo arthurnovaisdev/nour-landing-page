@@ -132,12 +132,18 @@ for (const service of ["Netlify", "PagBank", "WhatsApp", "Instagram"]) {
 }
 assert(privacyPage.includes("mailto:contato@nourcrypto.com.br"));
 assert.match(landingPage, /<link rel="canonical" href="https:\/\/nourcrypto\.com\.br\/" \/>/);
-for (const property of ["og:type", "og:title", "og:description", "og:url", "og:site_name"]) {
+for (const property of ["og:type", "og:title", "og:description", "og:url", "og:site_name", "og:image", "og:image:width", "og:image:height", "og:image:type", "og:image:alt"]) {
   assert.match(landingPage, new RegExp(`<meta property="${property}" content="[^"]+" \\/>`), "Open Graph ausente: " + property);
 }
-for (const name of ["twitter:card", "twitter:title", "twitter:description"]) {
+for (const name of ["twitter:card", "twitter:title", "twitter:description", "twitter:image", "twitter:image:alt"]) {
   assert.match(landingPage, new RegExp(`<meta name="${name}" content="[^"]+" \\/>`), "Twitter card ausente: " + name);
 }
+assert.match(landingPage, /<meta property="og:image" content="https:\/\/nourcrypto\.com\.br\/assets\/social\/nour-social-preview\.jpg" \/>/);
+assert.match(landingPage, /<meta property="og:image:width" content="1200" \/>/);
+assert.match(landingPage, /<meta property="og:image:height" content="630" \/>/);
+assert.match(landingPage, /<meta property="og:image:type" content="image\/jpeg" \/>/);
+assert.match(landingPage, /<meta name="twitter:card" content="summary_large_image" \/>/);
+assert.match(landingPage, /<meta name="twitter:image" content="https:\/\/nourcrypto\.com\.br\/assets\/social\/nour-social-preview\.jpg" \/>/);
 assert.doesNotMatch(landingPage, /noindex|nofollow/i);
 assert.match(thankYouPage, /<link rel="canonical" href="https:\/\/nourcrypto\.com\.br\/obrigado" \/>/);
 assert.match(thankYouPage, /<meta property="og:url" content="https:\/\/nourcrypto\.com\.br\/obrigado" \/>/);
