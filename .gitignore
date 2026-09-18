@@ -30,5 +30,11 @@ Desktop.ini
 # Estado local da Netlify
 .netlify/
 
-
+## development documentation
 Briefing_Landing_Page_NOUR.docx
+.openai/
+docs/
+previews/
+AGENTS.md
+README.md
+SECURITY.md

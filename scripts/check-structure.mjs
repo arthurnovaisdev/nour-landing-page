@@ -103,6 +103,8 @@ const thankYouPage = await readFile(resolve(publicRoot, "obrigado/index.html"), 
 const landingPage = await readFile(resolve(publicRoot, "index.html"), "utf8");
 const termsPage = await readFile(resolve(publicRoot, "termos-de-uso/index.html"), "utf8");
 const privacyPage = await readFile(resolve(publicRoot, "politica-de-privacidade/index.html"), "utf8");
+const robots = await readFile(resolve(publicRoot, "robots.txt"), "utf8");
+const sitemap = await readFile(resolve(publicRoot, "sitemap.xml"), "utf8");
 assert(landingPage.includes("Instagram · @sam_seza"));
 assert(landingPage.includes("mailto:contato@nourcrypto.com.br"));
 assert(!/em breve|em revisão/i.test(landingPage));
@@ -112,19 +114,49 @@ for (const [plan, price] of Object.entries({ monthly: "100", semiannual: "500", 
   assert.match(landingPage, new RegExp(`class="price"[^>]*><small>R\\$<\\/small>\\s*${price}<`), "Preço incorreto: " + plan);
   assert.equal([...landingPage.matchAll(new RegExp(`data-payment-plan="${plan}"`, "g"))].length, 1, "CTA duplicado ou ausente: " + plan);
 }
+for (const [plan, track, url] of [
+  ["monthly", "plan-monthly", expectedPayments.monthlyPaymentUrl],
+  ["semiannual", "plan-semiannual", expectedPayments.semiannualPaymentUrl],
+  ["annual", "plan-annual", expectedPayments.annualPaymentUrl],
+]) {
+  assert.match(landingPage, new RegExp(`href="${url.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"[^>]*data-payment-plan="${plan}"[^>]*data-track="${track}"`), "CTA rastreável ausente: " + plan);
+}
+assert.equal([...landingPage.matchAll(/<h1\b/gi)].length, 1, "A landing page deve ter exatamente um H1");
+assert.match(landingPage, /<html lang="pt-BR">/);
+assert.match(landingPage, /<meta name="viewport" content="width=device-width, initial-scale=1" \/>/);
+assert.match(landingPage, /<meta\s+name="description"\s+content="[^"]+"/);
 assert(termsPage.includes("não garante rentabilidade"));
 assert(termsPage.includes("mailto:contato@nourcrypto.com.br"));
 for (const service of ["Netlify", "PagBank", "WhatsApp", "Instagram"]) {
   assert(privacyPage.includes(service), "Serviço externo ausente na Política de Privacidade: " + service);
 }
 assert(privacyPage.includes("mailto:contato@nourcrypto.com.br"));
-assert.match(landingPage, /<link rel="canonical" href="https:\/\/nourcrypto\.com\.br" \/>/);
-assert.match(landingPage, /<meta property="og:url" content="https:\/\/nourcrypto\.com\.br" \/>/);
+assert.match(landingPage, /<link rel="canonical" href="https:\/\/nourcrypto\.com\.br\/" \/>/);
+for (const property of ["og:type", "og:title", "og:description", "og:url", "og:site_name"]) {
+  assert.match(landingPage, new RegExp(`<meta property="${property}" content="[^"]+" \\/>`), "Open Graph ausente: " + property);
+}
+for (const name of ["twitter:card", "twitter:title", "twitter:description"]) {
+  assert.match(landingPage, new RegExp(`<meta name="${name}" content="[^"]+" \\/>`), "Twitter card ausente: " + name);
+}
 assert.doesNotMatch(landingPage, /noindex|nofollow/i);
 assert.match(thankYouPage, /<link rel="canonical" href="https:\/\/nourcrypto\.com\.br\/obrigado" \/>/);
 assert.match(thankYouPage, /<meta property="og:url" content="https:\/\/nourcrypto\.com\.br\/obrigado" \/>/);
-assert.match(thankYouPage, /<meta name="robots" content="noindex, nofollow" \/>/);
+assert.match(thankYouPage, /<meta name="robots" content="noindex, follow" \/>/);
 assert.match(thankYouPage, /Acessá-la não confirma nem comprova um pagamento/);
 assert.match(thankYouPage, /Você não precisa enviar comprovante nem avisar/);
 assert.doesNotMatch(thankYouPage, /status\s+PAID|código de pedido|grupo\.whatsapp|chat\.whatsapp/i);
+assert.match(robots, /^User-agent: \*$/m);
+assert.match(robots, /^Allow: \/$/m);
+assert.match(robots, /^Sitemap: https:\/\/nourcrypto\.com\.br\/sitemap\.xml$/m);
+assert.doesNotMatch(robots, /Disallow:\s*\/obrigado/i);
+const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(([, url]) => url);
+assert.deepEqual(sitemapUrls, [
+  "https://nourcrypto.com.br/",
+  "https://nourcrypto.com.br/termos-de-uso/",
+  "https://nourcrypto.com.br/politica-de-privacidade/",
+]);
+assert.doesNotMatch(sitemap, /\/obrigado\/?</i);
+for (const track of ["plan-monthly", "plan-semiannual", "plan-annual", "whatsapp"]) {
+  assert(landingPage.includes(`data-track="${track}"`), "Identificador de tracking ausente: " + track);
+}
 console.log(`Estrutura, sintaxe, âncoras e ${publicFiles.length} arquivos públicos verificados; varredura heurística sem indícios de segredos.`);
