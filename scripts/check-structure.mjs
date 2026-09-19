@@ -36,9 +36,9 @@ assert.match(config, /style-src 'self'/);
 assert.doesNotMatch(config, /unsafe-inline|unsafe-eval/);
 const commercialConfig = await readFile(resolve(publicRoot, "assets/scripts/config.js"), "utf8");
 const expectedPayments = {
-  monthlyPaymentUrl: "https://pag.ae/82an7DjHH",
-  semiannualPaymentUrl: "https://pag.ae/82an7kw61",
-  annualPaymentUrl: "https://pag.ae/82an6e-Kn",
+  monthlyPaymentUrl: "https://pag.ae/82azZU9uo",
+  semiannualPaymentUrl: "https://pag.ae/82azZgDxQ",
+  annualPaymentUrl: "https://pag.ae/82azVEj2J",
 };
 for (const [property, url] of Object.entries(expectedPayments)) {
   assert(commercialConfig.includes(`${property}: "${url}"`), "Link de Pagamento incorreto: " + property);
@@ -99,7 +99,6 @@ for (const directory of ["scripts", "dist/assets/scripts"]) {
     assert.equal(result.status, 0, `Sintaxe inválida: ${relative(root, file)}`);
   }
 }
-const thankYouPage = await readFile(resolve(publicRoot, "obrigado/index.html"), "utf8");
 const landingPage = await readFile(resolve(publicRoot, "index.html"), "utf8");
 const termsPage = await readFile(resolve(publicRoot, "termos-de-uso/index.html"), "utf8");
 const privacyPage = await readFile(resolve(publicRoot, "politica-de-privacidade/index.html"), "utf8");
@@ -108,8 +107,11 @@ const sitemap = await readFile(resolve(publicRoot, "sitemap.xml"), "utf8");
 assert(landingPage.includes("Instagram · @sam_seza"));
 assert(landingPage.includes("mailto:contato@nourcrypto.com.br"));
 assert(!/em breve|em revisão/i.test(landingPage));
-assert(landingPage.includes("Ao escolher um plano, você será direcionado ao PagBank para concluir o pagamento."));
-assert(landingPage.includes("sem necessidade de enviar comprovante ou avisar que pagou."));
+assert(landingPage.includes("O que acontece depois que eu contratar?"));
+assert(landingPage.includes("Você conclui o pagamento com segurança no ambiente do PagBank."));
+assert(landingPage.includes("A equipe acompanha a confirmação do pagamento diretamente pelo PagBank."));
+assert(landingPage.includes("Após a confirmação, a Nour dá continuidade à sua entrada no grupo VIP."));
+assert(landingPage.includes("Você não precisa enviar comprovante nem avisar que pagou."));
 for (const [plan, price] of Object.entries({ monthly: "100", semiannual: "500", annual: "900" })) {
   assert.match(landingPage, new RegExp(`class="price"[^>]*><small>R\\$<\\/small>\\s*${price}<`), "Preço incorreto: " + plan);
   assert.equal([...landingPage.matchAll(new RegExp(`data-payment-plan="${plan}"`, "g"))].length, 1, "CTA duplicado ou ausente: " + plan);
@@ -145,23 +147,15 @@ assert.match(landingPage, /<meta property="og:image:type" content="image\/jpeg" 
 assert.match(landingPage, /<meta name="twitter:card" content="summary_large_image" \/>/);
 assert.match(landingPage, /<meta name="twitter:image" content="https:\/\/nourcrypto\.com\.br\/assets\/social\/nour-social-preview\.jpg" \/>/);
 assert.doesNotMatch(landingPage, /noindex|nofollow/i);
-assert.match(thankYouPage, /<link rel="canonical" href="https:\/\/nourcrypto\.com\.br\/obrigado" \/>/);
-assert.match(thankYouPage, /<meta property="og:url" content="https:\/\/nourcrypto\.com\.br\/obrigado" \/>/);
-assert.match(thankYouPage, /<meta name="robots" content="noindex, follow" \/>/);
-assert.match(thankYouPage, /Acessá-la não confirma nem comprova um pagamento/);
-assert.match(thankYouPage, /Você não precisa enviar comprovante nem avisar/);
-assert.doesNotMatch(thankYouPage, /status\s+PAID|código de pedido|grupo\.whatsapp|chat\.whatsapp/i);
 assert.match(robots, /^User-agent: \*$/m);
 assert.match(robots, /^Allow: \/$/m);
 assert.match(robots, /^Sitemap: https:\/\/nourcrypto\.com\.br\/sitemap\.xml$/m);
-assert.doesNotMatch(robots, /Disallow:\s*\/obrigado/i);
 const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(([, url]) => url);
 assert.deepEqual(sitemapUrls, [
   "https://nourcrypto.com.br/",
   "https://nourcrypto.com.br/termos-de-uso/",
   "https://nourcrypto.com.br/politica-de-privacidade/",
 ]);
-assert.doesNotMatch(sitemap, /\/obrigado\/?</i);
 for (const track of ["plan-monthly", "plan-semiannual", "plan-annual", "whatsapp"]) {
   assert(landingPage.includes(`data-track="${track}"`), "Identificador de tracking ausente: " + track);
 }
