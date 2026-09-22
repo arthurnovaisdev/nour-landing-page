@@ -80,7 +80,12 @@ for (const file of publicFiles.filter(file => file.endsWith(".html"))) {
   for (const [, target] of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
     if (/^[a-z][a-z0-9+.-]*:/i.test(target)) continue;
     const [pathname, anchor] = target.split("#");
-    const candidate = pathname ? resolve(dirname(file), pathname.split("?")[0]) : file;
+    const cleanPathname = pathname.split("?")[0];
+    const candidate = pathname
+      ? cleanPathname.startsWith("/")
+        ? resolve(publicRoot, cleanPathname.slice(1))
+        : resolve(dirname(file), cleanPathname)
+      : file;
     const candidateStat = await stat(candidate);
     const path = candidateStat.isDirectory() ? resolve(candidate, "index.html") : candidate;
     assert(!relative(publicRoot, path).startsWith(".."), "Link fora da pasta pública");
@@ -100,6 +105,7 @@ for (const directory of ["scripts", "dist/assets/scripts"]) {
   }
 }
 const landingPage = await readFile(resolve(publicRoot, "index.html"), "utf8");
+const notFoundPage = await readFile(resolve(publicRoot, "404.html"), "utf8");
 const termsPage = await readFile(resolve(publicRoot, "termos-de-uso/index.html"), "utf8");
 const privacyPage = await readFile(resolve(publicRoot, "politica-de-privacidade/index.html"), "utf8");
 const robots = await readFile(resolve(publicRoot, "robots.txt"), "utf8");
@@ -127,6 +133,12 @@ assert.equal([...landingPage.matchAll(/<h1\b/gi)].length, 1, "A landing page dev
 assert.match(landingPage, /<html lang="pt-BR">/);
 assert.match(landingPage, /<meta name="viewport" content="width=device-width, initial-scale=1" \/>/);
 assert.match(landingPage, /<meta\s+name="description"\s+content="[^"]+"/);
+assert.equal([...notFoundPage.matchAll(/<h1\b/gi)].length, 1, "A página 404 deve ter exatamente um H1");
+assert.match(notFoundPage, /<html lang="pt-BR">/);
+assert.match(notFoundPage, /<meta name="robots" content="noindex, nofollow" \/>/);
+assert.match(notFoundPage, /href="https:\/\/nourcrypto\.com\.br\/"/);
+assert.match(notFoundPage, /src="\/assets\/brand\/nour-logo\.png"/);
+assert(!sitemap.includes("/404"), "A página 404 não deve constar no sitemap");
 assert(termsPage.includes("não garante rentabilidade"));
 assert(termsPage.includes("mailto:contato@nourcrypto.com.br"));
 for (const service of ["Netlify", "PagBank", "WhatsApp", "Instagram"]) {
